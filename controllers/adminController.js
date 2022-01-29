@@ -22,7 +22,7 @@ exports.getDashboard = async (req, res) => {
       .skip((page - 1) * postPerPage)
       .limit(postPerPage);
 
-    res.render("admin/blog", {
+    res.render("admin/homeDashboard", {
       pageTitle: "Admin Dashboard",
       path: "/dashboard",
       layout: "./layouts/dashLayout",
