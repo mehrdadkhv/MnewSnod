@@ -19,10 +19,10 @@ router.get("/logout", authenticated, userController.logout);
 
 // @desc register page
 // @route GET /users/register
-router.get("/register", userController.register);
+// router.get("/register", userController.register);
 
 // @desc register Handle
 // @route POST /users/register
-router.post("/register", userController.createUser);
+// router.post("/register", userController.createUser);
 
 module.exports = router;
