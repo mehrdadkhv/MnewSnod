@@ -1,0 +1,59 @@
+<% if(blogs.length > 0){ %>
+<div class="col-lg-12 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">Inverse table</h4>
+      <p class="card-description">All post <code><%= fullname  %> </code></p>
+      <table class="table table-dark">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>عنوان</th>
+            <th>تاریخ</th>
+            <th>وضعیت</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% for(let blog of blogs) {%>
+          <tr>
+            <td>1</td>
+            <td>
+              <a href="/blogs/<% blog._id %>" class="text-white"> <%= blog.title %>
+            </td>
+            <td><%= formatDate(blog.createdAt) %></td>
+            <td>
+                
+                <label class="badge <%= blog.status == "عمومی" ? 'badge-success' : 'badge-danger' %> ">
+                    <%= blog.status %>
+                </label>
+                
+            </td>
+            <td>
+              <a href="/dashboard/edit-post/<%= blog._id %>" class="btn btn-sm btn-info">ویرایش</a>
+              <a href="/dashboard/delete-post/<%= blog._id %>" class="btn btn-sm btn-danger">حذف</a>
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+
+    </div>
+    <%- include('../includes/pagination.ejs')  %> 
+  </div>
+</div>
+
+<% } else { %>
+
+<div class="card-body">
+  <h4 class="card-title">Center aligned media</h4>
+  <div class="media">
+    <i
+      class="mdi mdi-earth icon-md text-info d-flex align-self-center mr-3"
+    ></i>
+    <div class="media-body">
+      <p class="card-text text-danger">Es gibt keine anzuzeigenden Beiträge</p>
+    </div>
+  </div>
+</div>
+
+<% } %>

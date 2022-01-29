@@ -1,0 +1,40 @@
+<section class="register-area ptb-50">
+  <div class="container">
+    <div class="register-form">
+      <h2>ثبت نام</h2>
+      <%- include("./includes/validationErrors.ejs")  %> 
+      <form action="/users/register" method="post">
+        <div class="form-group">
+          <label>نام و نام خانوادگی</label>
+          <input type="text" class="form-control" name="fullname" placeholder="Name"  />
+        </div>
+        <div class="form-group">
+          <label>ایمیل</label>
+          <input type="email" class="form-control" name="email" placeholder="Email" />
+        </div>
+        <div class="form-group">
+          <label>کلمه عبور</label>
+          <input type="password" class="form-control" name="password" placeholder="Password" />
+        </div>
+        <div class="form-group">
+          <label>تکرار کلمه عبور</label>
+          <input type="password" class="form-control" name="confirmPassword" placeholder="Confirm Password" />
+        </div>
+        <div class="row align-items-center">
+          <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="form-check">
+              <input type="checkbox" class="form-check-input" id="checkme" />
+              <label class="form-check-label" for="checkme"
+                >نشان دادن پسورد?</label
+              >
+            </div>
+          </div>
+        </div>
+        <button type="submit">ثبت نام</button>
+      </form>
+      <div class="important-text">
+        <p>اکانت کاربری دارید ؟ <a href="/users/login">ورود !</a></p>
+      </div>
+    </div>
+  </div>
+</section>
