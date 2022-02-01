@@ -6,6 +6,7 @@ const shortId = require("shortId");
 const appRoot = require("app-root-path");
 
 const Blog = require("../models/Blog");
+const Post = require("../models/Post");
 const { formatDate } = require("../utils/jalali");
 const { get500 } = require("../controllers/errorController");
 const { fileFilter } = require("../utils/multer");
@@ -50,6 +51,101 @@ exports.getAddPost = (req, res) => {
     fullname: req.user.fullname,
   });
 };
+
+exports.createPost = async (req, res) => {
+  const errorArr = [];
+
+  const thumbnail = req.files ? req.files.thumbnail : {};
+  const fileName = `${shortId.generate()}_${thumbnail.name}`;
+  const uploadPath = `${appRoot}/public/uploads/thumbnails/${fileName}`;
+
+  try {
+    req.body = { ...req.body, thumbnail };
+
+    await Blog.postValidation(req.body);
+    res.redirect("/dashboard");
+    await sharp(thumbnail.data)
+      .jpeg({ quality: 60 })
+      .toFile(uploadPath)
+      .catch((err) => console.log(err));
+
+    await Blog.create({
+      ...req.body,
+      user: req.user.id,
+      thumbnail: fileName,
+    });
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+    err.inner.forEach((e) => {
+      errorArr.push({
+        name: e.path,
+        message: e.message,
+      });
+    });
+    res.render("admin/addPost", {
+      pageTitle: "Admin Add Post",
+      path: "/admin/addPost",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      errors: errorArr,
+    });
+  }
+};
+
+exports.getAddPostNews = (req, res) => {
+  res.render("admin/addPostNews", {
+    pageTitle: "News create Post",
+    path: "/admin/addPostNews",
+    layout: "./layouts/dashLayout",
+    fullname: req.user.fullname,
+  });
+};
+
+exports.createPostNews = async (req, res) => {
+  const errorArr = [];
+
+  const thumbnail = req.files ? req.files.thumbnail : {};
+  const fileName = `${shortId.generate()}_${thumbnail.name}`;
+  const uploadPath = `${appRoot}/public/uploads/thumbnails/${fileName}`;
+
+  try {
+    req.body = { ...req.body, thumbnail };
+    await Post.postValidation(req.body);
+    res.redirect("/dashboard");
+    await sharp(thumbnail.data)
+      .jpeg({ quality: 60 })
+      .toFile(uploadPath)
+      .catch((err) => console.log(err));
+
+    const newPost = await Post.create({
+      ...req.body,
+      user: req.user.id,
+      thumbnail: fileName,
+    });
+    await Post.updateMany(
+      { _id: newPost.categories },
+      { $push: { products: newPost._id } }
+    );
+    res.redirect("/dashboard");
+  } catch (err) {
+    console.log(err);
+    err.inner.forEach((e) => {
+      errorArr.push({
+        name: e.path,
+        message: e.message,
+      });
+    });
+    res.render("admin/addPostNews", {
+      pageTitle: "News create Post",
+      path: "/admin/addPostNews",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      errors: errorArr,
+    });
+  }
+};
+
 exports.getEditPost = async (req, res) => {
   const post = await Blog.findOne({
     _id: req.params.id,
@@ -148,47 +244,6 @@ exports.deletePost = async (req, res) => {
   } catch (err) {
     console.log(err);
     return res.render("errors/500");
-  }
-};
-
-exports.createPost = async (req, res) => {
-  const errorArr = [];
-
-  const thumbnail = req.files ? req.files.thumbnail : {};
-  const fileName = `${shortId.generate()}_${thumbnail.name}`;
-  const uploadPath = `${appRoot}/public/uploads/thumbnails/${fileName}`;
-
-  try {
-    req.body = { ...req.body, thumbnail };
-
-    await Blog.postValidation(req.body);
-    res.redirect("/dashboard");
-    await sharp(thumbnail.data)
-      .jpeg({ quality: 60 })
-      .toFile(uploadPath)
-      .catch((err) => console.log(err));
-
-    await Blog.create({
-      ...req.body,
-      user: req.user.id,
-      thumbnail: fileName,
-    });
-    res.redirect("/dashboard");
-  } catch (err) {
-    console.log(err);
-    err.inner.forEach((e) => {
-      errorArr.push({
-        name: e.path,
-        message: e.message,
-      });
-    });
-    res.render("admin/addPost", {
-      pageTitle: "Admin Add Post",
-      path: "/admin/addPost",
-      layout: "./layouts/dashLayout",
-      fullname: req.user.fullname,
-      errors: errorArr,
-    });
   }
 };
 

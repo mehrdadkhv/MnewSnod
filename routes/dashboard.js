@@ -18,6 +18,7 @@ router.get(
 //@desc get post.
 //@route GET /dashboard/add-post
 router.get("/add-post", authenticated, adminController.getAddPost);
+router.get("/add-post-news", authenticated, adminController.getAddPostNews);
 
 //  @desc   Dashboard Edit Post
 //  @route  GET /dashboard/edit-post/:id
@@ -30,6 +31,7 @@ router.get("/delete-post/:id", authenticated, adminController.deletePost);
 //@desc create post.
 //@route POST /dashboard/add-post
 router.post("/add-post", authenticated, adminController.createPost);
+router.post("/add-post-news", authenticated, adminController.createPostNews);
 
 //@desc dashboard post edit.
 //@route POST /dashboard/edit-post/:id

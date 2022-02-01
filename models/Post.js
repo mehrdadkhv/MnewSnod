@@ -5,37 +5,37 @@ const { schema } = require("./secure/postValidation");
 const postShema = new mongoose.Schema({
   title: {
     type: String,
-    required: true,
+
     trim: true,
     minLength: 5,
     maxLength: 100,
   },
   summary: {
     type: String,
-    required: true,
   },
   body: {
     type: String,
-    required: true,
   },
   status: {
     type: String,
     required: true,
-    enum: ["new", "hot"],
-    default: "",
+    enum: ["new", "hot", "public", "private"],
+    default: "public",
   },
   thumbnail: {
     type: String,
-    required: true,
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  category: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Category",
-  },
+  category: [
+    {
+      type: mongoose.Types.ObjectId,
+      ref: "Category",
+    },
+  ],
+
   createdAt: {
     type: Date,
     default: Date.now,
