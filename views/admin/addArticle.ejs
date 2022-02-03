@@ -1,0 +1,64 @@
+<div class="col-md-6 grid-margin stretch-card">
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title">فرم ثبت خبر</h4>
+      <!-- <p class="card-description">Horizontal form layout</p> -->
+      <div><%-include('../includes/validationErrors') %></div>
+      <form class="forms-sample" action="/dashboard/add-article" method="POST">
+        <div class="form-group">
+          <label for="name">نام خبر</label>
+          <input type="text" class="form-control" id="name" name="name" />
+        </div>
+        <div class="form-group">
+          <label for="exampleSelectGender">دسته بندی</label>
+          <select class="form-control" name="category" id="exampleSelectGender">
+            <option value="akhbar">خبر</option>
+            <option value="amktafrihi">اماکن تفریحی</option>
+            <option value="amktarikhi">اماکن تاریخی</option>
+            <option value="marasemat">مراسمات</option>
+            <option value="bazar">بازار</option>
+            <option value="mahlat">محلات</option>
+            <option value="orgdolat">ارگان دولتی</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="title">عنوان</label>
+          <input type="text" class="form-control" id="title" name="title" />
+        </div>
+        <div class="form-group">
+          <label for="summary">خلاصه مطلب</label>
+          <input type="text" class="form-control" id="summary" name="summary" />
+        </div>
+        <div class="form-group">
+          <label>آپلود عکس و ویدو</label>
+          <input type="file" name="img[]" class="file-upload-default" />
+          <div class="input-group col-xs-12">
+            <input
+              type="text"
+              class="form-control file-upload-info"
+              disabled=""
+            />
+            <span class="input-group-append">
+              <button class="file-upload-browse btn btn-primary" type="button">
+                Upload
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="body">متن اصلی</label>
+          <textarea
+            class="form-control"
+            id="body"
+            rows="4"
+            name="body"
+          ></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        <button class="btn btn-light">Cancel</button>
+      </form>
+    </div>
+  </div>
+</div>

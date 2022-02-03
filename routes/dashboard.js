@@ -3,6 +3,7 @@ const { authenticated } = require("../middlewares/auth");
 const authController = require("../controllers/authController");
 
 const adminController = require("../controllers/adminController");
+const articleController = require("../controllers/articleController");
 
 const router = new Router();
 
@@ -40,5 +41,9 @@ router.post("/edit-post/:id", authenticated, adminController.editPost);
 //@desc dashboard image-upload.
 //@route POST /dashboard/image-upload
 router.post("/image-upload", authenticated, adminController.uploadImage);
+
+// article routes
+router.get("/add-article", articleController.getArticle);
+router.post("/add-article", articleController.createArticle);
 
 module.exports = router;
