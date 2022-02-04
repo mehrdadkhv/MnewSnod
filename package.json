@@ -19,6 +19,7 @@
     "debug": "^4.3.3",
     "dotenv": "^14.2.0",
     "ejs": "^3.1.6",
+    "eslint-config-prettier": "^8.3.0",
     "express": "^4.17.2",
     "express-ejs-layouts": "^2.5.1",
     "express-fileupload": "^1.2.1",
@@ -33,11 +34,15 @@
     "passport-local": "^1.0.0",
     "sharp": "^0.29.3",
     "shortid": "^2.2.16",
+    "slugify": "^1.6.5",
     "uuid": "^8.3.2",
     "winston": "^3.4.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "cross-env": "^7.0.3",
+    "eslint": "^8.8.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0"
   }
 }

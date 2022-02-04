@@ -4,6 +4,7 @@ const authController = require("../controllers/authController");
 
 const adminController = require("../controllers/adminController");
 const articleController = require("../controllers/articleController");
+const categoryController = require("../controllers/categoryController");
 
 const router = new Router();
 
@@ -45,5 +46,15 @@ router.post("/image-upload", authenticated, adminController.uploadImage);
 // article routes
 router.get("/add-article", articleController.getArticle);
 router.post("/add-article", articleController.createArticle);
+
+//categories
+router.get("/categories", categoryController.getCategory);
+router.post("/categories", categoryController.sotreCategory);
+// router.get("/categories/new", categoryController.createCategory);
+router.get("/categories/edit/:id", categoryController.editCategory);
+router.get("/categories/:slug", categoryController.slugCategory);
+
+router.put("/categories/:id", categoryController.updateCategory);
+router.delete("/categories/:id", categoryController.deleteCategory);
 
 module.exports = router;
