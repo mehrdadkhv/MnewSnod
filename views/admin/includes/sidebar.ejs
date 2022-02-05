@@ -32,7 +32,10 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-article">ساخت مقاله</a>
+            <a class="nav-link" href="/dashboard/articles">ساخت مقاله</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard/articles/all">همه مقالات</a>
           </li>
         </ul>
       </div>
@@ -47,7 +50,7 @@
         aria-controls="auth"
       >
         <span class="icon-bg"><i class="mdi mdi-lock menu-icon"></i></span>
-        <span class="menu-title">دسته بندی </span>
+        <span class="menu-title"> دسته بندی ها </span>
         <i class="menu-arrow"></i>
       </a>
       <div class="collapse" id="auth">
@@ -57,181 +60,15 @@
               ساخت دسته بندی</a
             >
           </li>
-        </ul>
-      </div>
-    </li>
 
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-org-dolat"
-        aria-expanded="false"
-        aria-controls="ui-org-dolat"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">ارگان های دولتی</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-org-dolat">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
-        </ul>
-      </div>
-    </li>
+          <% categories.forEach(category => { %>
 
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-mrsm"
-        aria-expanded="false"
-        aria-controls="ui-mrsm"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">مراسمات</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-mrsm">
-        <ul class="nav flex-column sub-menu">
           <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">تمام صفحات</a>
+            <a class="nav-link" href="/dashboard/categories/"
+              ><%= category.title %></a
+            >
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-mahal"
-        aria-expanded="false"
-        aria-controls="ui-mahal"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">محلات </span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-mahal">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">تمام صفحات</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-bazar"
-        aria-expanded="false"
-        aria-controls="ui-bazar"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">بازار </span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-bazar">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">تمام صفحات</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-akn-dolat"
-        aria-expanded="false"
-        aria-controls="ui-akn-dolat"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">اماکن تاریخی </span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-akn-dolat">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">تمام صفحات</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-amkn-tafrihi"
-        aria-expanded="false"
-        aria-controls="ui-amkn-tafrihi"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">اماکن تفریحی </span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-amkn-tafrihi">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">تمام صفحات</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        data-toggle="collapse"
-        href="#ui-akhbar"
-        aria-expanded="false"
-        aria-controls="ui-akhbar"
-      >
-        <span class="icon-bg"
-          ><i class="mdi mdi-file-document-box menu-icon"></i
-        ></span>
-        <span class="menu-title">اخبار</span>
-        <i class="menu-arrow"></i>
-      </a>
-      <div class="collapse" id="ui-akhbar">
-        <ul class="nav flex-column sub-menu">
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">تمام صفحات</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/add-post">ساخت صفحه</a>
-          </li>
+          <% }); %>
         </ul>
       </div>
     </li>

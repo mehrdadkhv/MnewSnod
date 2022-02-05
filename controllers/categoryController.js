@@ -1,16 +1,18 @@
 const express = require("express");
 const Category = require("../models/Category");
-const router = express.Router();
-const { buildAncestors } = require("../utils/buildAncestors");
-const { get500 } = require("../controllers/errorController");
 
-exports.getCategory = (req, res) => {
+const { buildAncestors } = require("../utils/buildAncestors");
+
+exports.getCategory = async (req, res) => {
+  const category = await Category.find({});
+
   res.render("admin/categories/new", {
     category: new Category(),
     pageTitle: "ساخت دسته بندی",
     path: "/admin/create-category",
     layout: "./layouts/dashLayout",
     fullname: req.user.fullname,
+    categories: category,
   });
 };
 
@@ -24,10 +26,12 @@ exports.editCategory = async (req, res) => {
       fullname: req.user.fullname,
     });
   } catch (error) {
-    res.render("errors/500", {
-      pageTitle: "خطای سرور | 500",
-      page: "/500",
-      layout: "errors/500",
+    res.render("admin/updateCategory", {
+      category,
+      path: "/admin/edit-category",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      errors: errorArr,
     });
     console.log(error);
   }
@@ -37,34 +41,28 @@ exports.slugCategory = async (req, res) => {
   try {
     const category = await Category.findOne({ slug: req.params.slug });
     if (category == null) res.redirect("/dashboard");
-    res.render("/admin/categories/show", {
+    res.render("/admin/categories", {
       category,
       path: "/admin/slug-category",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
     });
   } catch (error) {
-    console.log(err);
-    err.inner.forEach((e) => {
-      errorArr.push({
-        name: e.path,
-        message: e.message,
-      });
+    res.render("errors/500", {
+      pageTitle: "خطای سرور | 500",
+      page: "/500",
+      layout: "errors/500",
     });
-    res.render("/admin/categories/show", {
-      category,
-      path: "/admin/slug-category",
-      layout: "./layouts/dashLayout",
-      fullname: req.user.fullname,
-      errors: errorArr,
-    });
+    console.log(error);
   }
 };
 
 exports.sotreCategory = async (req, res) => {
+  const errorArr = [];
+
   let parent = req.body.parent ? req.body.parent : null;
   const category = new Category({
-    name: req.body.name,
+    title: req.body.title,
     slug: req.body.slug,
     parent: parent,
   });
@@ -73,20 +71,15 @@ exports.sotreCategory = async (req, res) => {
     buildAncestors(newCategory, category._id, parent);
     res.redirect(`/dashboard/categories/`);
   } catch (err) {
-    console.log(err);
-    err.inner.forEach((e) => {
-      errorArr.push({
-        name: e.path,
-        message: e.message,
-      });
-    });
-    res.render("/admin/categories/show", {
-      category,
-      path: "/admin/slug-category",
+    res.render("admin/categories/new", {
+      category: new Category(),
+      pageTitle: "ساخت دسته بندی",
+      path: "/admin/create-category",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
-      errors: errorArr,
+      errorArr: err,
     });
+    console.log(err.message);
   }
 };
 

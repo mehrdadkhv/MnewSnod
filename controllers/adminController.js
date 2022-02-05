@@ -10,10 +10,12 @@ const Post = require("../models/Post");
 const { formatDate } = require("../utils/jalali");
 const { get500 } = require("../controllers/errorController");
 const { fileFilter } = require("../utils/multer");
+const Category = require("../models/Category");
 
 exports.getDashboard = async (req, res) => {
   const page = +req.query.page || 1;
   const postPerPage = 10;
+  const category = await Category.find({});
 
   try {
     const numberOfPosts = await Blog.find({
@@ -36,6 +38,7 @@ exports.getDashboard = async (req, res) => {
       hasNextPage: postPerPage * page < numberOfPosts,
       hasPreviousPage: page > 1,
       lastPage: Math.ceil(numberOfPosts / postPerPage),
+      categories: category,
     });
   } catch (error) {
     console.log(error);

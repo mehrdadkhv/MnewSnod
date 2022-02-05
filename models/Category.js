@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const slugify = require("slugify");
 
 const categorySchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
     required: true,
   },
@@ -31,9 +31,8 @@ const categorySchema = new mongoose.Schema({
 
 categorySchema.pre("validate", function (next) {
   if (this.title) {
-    this.slug = slugify(this.title, { lower: true, string: true });
+    this.slug = slugify(this.title, { lower: true, strict: true });
   }
   next();
 });
-
 module.exports = mongoose.model("Category", categorySchema);

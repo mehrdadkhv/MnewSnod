@@ -1,4 +1,6 @@
 <div class="col-md-6 grid-margin stretch-card">
   <h1>ساخت دسته بندی</h1>
+  <div><%-include('../../includes/validationErrors') %></div>
+
   <form action="/categories" method="POST"><%- include('_form_fields') %></form>
 </div>
