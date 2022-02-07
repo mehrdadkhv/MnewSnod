@@ -1,5 +1,6 @@
 const express = require("express");
 const Category = require("../models/Category");
+const Article = require("../models/Article");
 
 const { buildAncestors } = require("../utils/buildAncestors");
 
@@ -39,13 +40,26 @@ exports.editCategory = async (req, res) => {
 
 exports.slugCategory = async (req, res) => {
   try {
-    const category = await Category.findOne({ slug: req.params.slug });
+    const Allcategory = await Category.find({});
+
+    const category = await Category.findOne({ slug: req.params.slug }).populate(
+      "articles",
+      "-_id title"
+    );
+    const ariclesCategory = await Category.find({
+      slug: req.params.slug,
+    }).populate("articles");
+
+    console.log(req.params);
     if (category == null) res.redirect("/dashboard");
-    res.render("/admin/categories", {
-      category,
+    res.render("admin/categories/show", {
+      pageTitle: req.params.slug,
       path: "/admin/slug-category",
       layout: "./layouts/dashLayout",
-      fullname: req.user.fullname,
+      fullname: category.title,
+      category,
+      ariclesCategory,
+      categories: Allcategory,
     });
   } catch (error) {
     res.render("errors/500", {

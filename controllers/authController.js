@@ -1,5 +1,3 @@
-const AppError = require("../utils/appError");
-
 exports.restricTo = (...roles) => {
   return (req, res, next) => {
     if (!roles.includes(req.user.role)) {

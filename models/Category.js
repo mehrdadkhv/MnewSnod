@@ -16,12 +16,18 @@ const categorySchema = new mongoose.Schema({
     default: null,
     ref: "Category",
   },
+  articles: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Article",
+    },
+  ],
+
   ancestors: [
     {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
-        index: true,
       },
       name: String,
       slug: String,

@@ -5,15 +5,16 @@ const Category = require("../models/Category");
 const { buildAncestors } = require("../utils/buildAncestors");
 
 exports.getArticle = async (req, res) => {
-  const category = await Category.findById({}).populate("category").exec;
-  const article = await Article.find({});
+  const article = await Article.find().populate("category", "-_id title slug");
+
+  const category = await Category.find({});
+  console.log(category);
   res.render("admin/articles/index", {
-    pageTitle: "بخش مدیریت |ساخت پست جدید",
+    pageTitle: "بخش مدیریت |   تمام مقالات",
     path: "/admin/get-article",
     layout: "./layouts/dashLayout",
-    fullname: req.user.fullname,
     articles: article,
-    category,
+    categories: category,
   });
 };
 
@@ -39,11 +40,9 @@ exports.editArticle = async (req, res) => {
     });
   } catch (error) {
     res.render("admin/articles/edits", {
-      article,
       path: "/admin/edit-article",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
-      errors: errorArr,
     });
     console.log(error);
   }
@@ -102,7 +101,6 @@ exports.storeArticle = async (req, res) => {
 exports.updateArticle = async (req, res) => {
   try {
     req.article = await Article.findById(req.params.id);
-    next();
   } catch (error) {
     res.render("errors/500", {
       pageTitle: "خطای سرور | 500",
