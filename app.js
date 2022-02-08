@@ -28,6 +28,8 @@ require("./config/passport");
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 // loggin routes
 if (process.env.NODE_ENV === "development") {
   // debug("Morgan Enabale");

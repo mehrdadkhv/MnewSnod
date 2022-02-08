@@ -18,11 +18,12 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      default: null,
-      ref: "Category",
-    },
+    category: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Category",
+      },
+    ],
     categoryAt: {
       type: String,
       default: Date.now,

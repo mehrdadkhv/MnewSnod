@@ -48,6 +48,7 @@ router.get("/add-article", articleController.getArticle);
 router.post("/add-article", articleController.createArticle);
 
 //categories
+
 router.get("/categories", categoryController.getCategory);
 router.post("/categories", categoryController.sotreCategory);
 // router.get("/categories/new", categoryController.createCategory);

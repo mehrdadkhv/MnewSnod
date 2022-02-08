@@ -8,7 +8,7 @@ exports.getArticle = async (req, res) => {
   const article = await Article.find().populate("category", "-_id title slug");
 
   const category = await Category.find({});
-  console.log(category);
+
   res.render("admin/articles/index", {
     pageTitle: "بخش مدیریت |   تمام مقالات",
     path: "/admin/get-article",
@@ -69,33 +69,22 @@ exports.slugArticle = async (req, res) => {
 };
 
 exports.storeArticle = async (req, res) => {
-  const errorArr = [];
-
-  const article = new Article({
+  const article = await Article.create({
     title: req.body.title,
     summary: req.body.summary,
     body: req.body.body,
     slug: req.body.slug,
     category: req.body.category,
   });
+  console.log(article.category);
 
-  try {
-    console.log(req.body);
-    let newArticle = await article.save();
+  Category.findByIdAndUpdate(
+    article._id,
+    { $push: { articles: article._id } },
+    { new: true, useFindAndModify: false }
+  );
 
-    // buildAncestors(newArticle, article._id, parent);
-    res.redirect(`/dashboard/articles/`);
-  } catch (err) {
-    res.render("admin/articles/new", {
-      article: new Article(),
-      pageTitle: "ساخت آرتیکل",
-      path: "/admin/create-article",
-      layout: "./layouts/dashLayout",
-      fullname: req.user.fullname,
-      errors: errorArr,
-    });
-    console.log(err.message);
-  }
+  res.redirect("/dashboard");
 };
 
 exports.updateArticle = async (req, res) => {

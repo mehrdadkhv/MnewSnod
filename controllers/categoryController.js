@@ -48,9 +48,12 @@ exports.slugCategory = async (req, res) => {
     );
     const ariclesCategory = await Category.find({
       slug: req.params.slug,
-    }).populate("articles");
+    }).populate({
+      path: "articles",
+      fields: "title slug",
+    });
 
-    console.log(req.params);
+    console.log(ariclesCategory[0]._id);
     if (category == null) res.redirect("/dashboard");
     res.render("admin/categories/show", {
       pageTitle: req.params.slug,

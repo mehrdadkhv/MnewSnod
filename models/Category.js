@@ -1,39 +1,31 @@
 const mongoose = require("mongoose");
 const slugify = require("slugify");
 
-const categorySchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  parent: {
-    type: mongoose.Schema.Types.ObjectId,
-    default: null,
-    ref: "Category",
-  },
-  articles: [
-    {
+const categorySchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    parent: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Article",
+      default: null,
+      ref: "Category",
     },
-  ],
-
-  ancestors: [
-    {
-      _id: {
+    articles: [
+      {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Category",
+        ref: "Article",
       },
-      name: String,
-      slug: String,
-    },
-  ],
-});
+    ],
+  },
+  { toObject: { virtuals: true } }
+);
 
 categorySchema.pre("validate", function (next) {
   if (this.title) {
