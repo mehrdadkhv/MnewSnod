@@ -5,7 +5,10 @@ const mongoose = require("mongoose");
 const { buildAncestors } = require("../utils/buildAncestors");
 
 exports.getArticle = async (req, res) => {
-  const article = await Article.find().populate("category", "-_id title slug");
+  const article = await Article.find({}).populate(
+    "category",
+    "-_id title slug"
+  );
 
   const category = await Category.find({});
 
@@ -73,39 +76,35 @@ exports.storeArticle = async (req, res) => {
 
   let category = req.body.category ? req.body.category : null;
 
-  const newArticle = await Article.create({
-    title: req.body.title,
-    slug: req.body.slug,
-    summary: req.body.summary,
-    description: req.body.description,
-    body: req.body.body,
-    category: category,
-    categories: Allcategory,
-  });
-
-  const articleCategoriesID = mongoose.Types.ObjectId(req.body.category);
-
-  Category.findByIdAndUpdate(
-    { _id: articleCategoriesID },
-    { $push: { articles: newArticle._id } },
-    { new: true, useFindAndModify: false }
-  )
-    .then((docs) => {
-      if (docs) {
-        console.log({ success: true, data: docs });
-      } else {
-        console.log(console.log({ success: true, data: docs }));
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  // console.log(req.body);
   try {
-    // let newArticle = await article.save();
+    const newArticle = await Article.create({
+      title: req.body.title,
+      slug: req.body.slug,
+      summary: req.body.summary,
+      description: req.body.description,
+      body: req.body.body,
+      category: category,
+      categories: Allcategory,
+    });
 
-    // buildAncestors(newArticle, article._id, category);
-    res.redirect(`/dashboard/categories/`);
+    const articleCategoriesID = mongoose.Types.ObjectId(req.body.category);
+    Category.findByIdAndUpdate(
+      { _id: articleCategoriesID },
+      { $push: { articles: newArticle._id } },
+      { new: true, useFindAndModify: false }
+    )
+      .then((docs) => {
+        if (docs) {
+          console.log({ success: true, data: docs });
+        } else {
+          console.log(console.log({ success: false, data: docs }));
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    res.redirect(`admin/articles/new`);
   } catch (err) {
     res.render("admin/categories/new", {
       category: new Category(),

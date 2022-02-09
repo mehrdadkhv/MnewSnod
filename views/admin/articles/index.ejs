@@ -27,9 +27,9 @@
                             <td>
 
                                 <td>
-                                    <a href="/dashboard/categories/<%= JSON.parse(JSON.stringify(article.category))?.slug %>" class="text-white">
+                                    <a href="/dashboard/categories/<%# JSON.parse(JSON.stringify(article.categories))?.slug %>" class="text-white">
                                         <%# console.log(JSON.parse(JSON.stringify(article.category))?.title); %> 
-                                        <%= JSON.parse(JSON.stringify(article.category))?.title %>
+                                        <%# JSON.parse(JSON.stringify(article.categories))?.title %>
                                 <td>
 
                                 <a href="/dashboard/edit-article/<%= article._id %>"
