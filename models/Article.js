@@ -24,6 +24,7 @@ const articleSchema = new mongoose.Schema(
         ref: "Category",
       },
     ],
+
     categoryAt: {
       type: String,
       default: Date.now,
@@ -40,7 +41,7 @@ const articleSchema = new mongoose.Schema(
 articleSchema.virtual("category", {
   ref: "Category",
   localField: "_id",
-  foreignField: "article",
+  foreignField: "articles",
 });
 
 articleSchema.pre("validate", function (next) {

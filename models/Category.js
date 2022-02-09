@@ -24,11 +24,11 @@ const categorySchema = new mongoose.Schema({
   ],
 });
 
-// categorySchema.virtual("article", {
-//   ref: "Article",
-//   localField: "_id",
-//   foreignField: "category",
-// });
+categorySchema.virtual("article", {
+  ref: "Article",
+  localField: "_id",
+  foreignField: "categories",
+});
 categorySchema.pre("validate", function (next) {
   if (this.title) {
     this.slug = slugify(this.title, { lower: true, strict: true });

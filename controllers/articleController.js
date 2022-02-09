@@ -1,5 +1,6 @@
 const Article = require("../models/Article");
 const Category = require("../models/Category");
+const mongoose = require("mongoose");
 
 const { buildAncestors } = require("../utils/buildAncestors");
 
@@ -69,7 +70,6 @@ exports.slugArticle = async (req, res) => {
 
 exports.storeArticle = async (req, res) => {
   const Allcategory = await Category.find({});
-  let parent = req.body.parent ? req.body.parent : null;
 
   let category = req.body.category ? req.body.category : null;
 
@@ -79,22 +79,32 @@ exports.storeArticle = async (req, res) => {
     summary: req.body.summary,
     description: req.body.description,
     body: req.body.body,
-    categories: category,
-    parent: parent,
+    category: category,
     categories: Allcategory,
   });
 
-  const articleCategoriesID = req.body.category;
+  const articleCategoriesID = mongoose.Types.ObjectId(req.body.category);
 
-  const cat = Category.findByIdAndUpdate(
+  Category.findByIdAndUpdate(
     { _id: articleCategoriesID },
-    {
-      $push: { articles: newArticle._id },
-    },
+    { $push: { articles: newArticle._id } },
     { new: true, useFindAndModify: false }
-  );
-  console.log(cat);
+  )
+    .then((docs) => {
+      if (docs) {
+        console.log({ success: true, data: docs });
+      } else {
+        console.log(console.log({ success: true, data: docs }));
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  // console.log(req.body);
   try {
+    // let newArticle = await article.save();
+
+    // buildAncestors(newArticle, article._id, category);
     res.redirect(`/dashboard/categories/`);
   } catch (err) {
     res.render("admin/categories/new", {

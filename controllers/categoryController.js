@@ -73,6 +73,7 @@ exports.slugCategory = async (req, res) => {
 };
 
 exports.sotreCategory = async (req, res) => {
+  const Allcategory = await Category.find({});
   let parent = req.body.parent ? req.body.parent : null;
   const category = new Category({
     title: req.body.title,
@@ -90,6 +91,7 @@ exports.sotreCategory = async (req, res) => {
       path: "/admin/create-category",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
+      categories: Allcategory,
       errorArr: err,
     });
     console.log(err.message);
