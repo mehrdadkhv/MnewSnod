@@ -1,6 +1,4 @@
-const express = require("express");
 const Category = require("../models/Category");
-const Article = require("../models/Article");
 
 const { buildAncestors } = require("../utils/buildAncestors");
 
@@ -75,8 +73,6 @@ exports.slugCategory = async (req, res) => {
 };
 
 exports.sotreCategory = async (req, res) => {
-  const errorArr = [];
-
   let parent = req.body.parent ? req.body.parent : null;
   const category = new Category({
     title: req.body.title,

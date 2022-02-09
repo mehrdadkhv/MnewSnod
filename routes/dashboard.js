@@ -58,12 +58,13 @@ router.put("/categories/:id", categoryController.updateCategory);
 router.delete("/categories/:id", categoryController.deleteCategory);
 
 //articles
-router.get("/articles/all", articleController.getArticle);
-router.get("/articles", articleController.createArticle);
-router.get("/articles", articleController.getArticle);
-router.post("/articles", articleController.storeArticle);
-router.get("/articles/edit/:id", articleController.editArticle);
-router.get("/articles/:slug", articleController.slugArticle);
+router
+  .get("/articles/all", articleController.getArticle)
+  .get("/articles", articleController.createArticle)
+  .get("/articles", articleController.getArticle)
+  .post("/articles", articleController.storeArticle)
+  .get("/articles/edit/:id", articleController.editArticle)
+  .get("/articles/:slug", articleController.slugArticle);
 router.put("/articles/:id", articleController.updateArticle);
 router.delete("/articles/:id", articleController.deleteArticle);
 

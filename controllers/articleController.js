@@ -1,4 +1,3 @@
-const express = require("express");
 const Article = require("../models/Article");
 const Category = require("../models/Category");
 
@@ -69,22 +68,45 @@ exports.slugArticle = async (req, res) => {
 };
 
 exports.storeArticle = async (req, res) => {
-  const article = await Article.create({
-    title: req.body.title,
-    summary: req.body.summary,
-    body: req.body.body,
-    slug: req.body.slug,
-    category: req.body.category,
-  });
-  console.log(article.category);
+  const Allcategory = await Category.find({});
+  let parent = req.body.parent ? req.body.parent : null;
 
-  Category.findByIdAndUpdate(
-    article._id,
-    { $push: { articles: article._id } },
+  let category = req.body.category ? req.body.category : null;
+
+  const newArticle = await Article.create({
+    title: req.body.title,
+    slug: req.body.slug,
+    summary: req.body.summary,
+    description: req.body.description,
+    body: req.body.body,
+    categories: category,
+    parent: parent,
+    categories: Allcategory,
+  });
+
+  const articleCategoriesID = req.body.category;
+
+  const cat = Category.findByIdAndUpdate(
+    { _id: articleCategoriesID },
+    {
+      $push: { articles: newArticle._id },
+    },
     { new: true, useFindAndModify: false }
   );
-
-  res.redirect("/dashboard");
+  console.log(cat);
+  try {
+    res.redirect(`/dashboard/categories/`);
+  } catch (err) {
+    res.render("admin/categories/new", {
+      category: new Category(),
+      pageTitle: "ساخت دسته بندی",
+      path: "/admin/create-category",
+      layout: "./layouts/dashLayout",
+      fullname: req.user.fullname,
+      errorArr: err,
+    });
+    console.log(err.message);
+  }
 };
 
 exports.updateArticle = async (req, res) => {

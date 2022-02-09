@@ -18,7 +18,7 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    category: [
+    categories: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
@@ -37,10 +37,10 @@ const articleSchema = new mongoose.Schema(
   // { virtual: true }
 );
 
-articleSchema.virtual("articles", {
+articleSchema.virtual("category", {
   ref: "Category",
   localField: "_id",
-  foreignField: "category",
+  foreignField: "article",
 });
 
 articleSchema.pre("validate", function (next) {
