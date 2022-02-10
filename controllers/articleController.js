@@ -104,7 +104,7 @@ exports.storeArticle = async (req, res) => {
         console.log(err);
       });
 
-    res.redirect(`admin/articles/new`);
+    res.redirect("/dashboard");
   } catch (err) {
     res.render("admin/categories/new", {
       category: new Category(),
