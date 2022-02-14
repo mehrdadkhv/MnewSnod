@@ -1,7 +1,15 @@
 <div class="col-md-6 grid-margin stretch-card">
   <div class="card">
-    <form action="/dashboard/articles" method="POST">
+    <form
+      action="/dashboard/articles"
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <div div class="card-body"><%- include('_form_fields') %></div>
     </form>
+    <div class="w-100 bg-light text-center">
+      <p id="uploadResult" class="overflow-auto">آدرس عکس آپلود شده</p>
+  </div>
+
   </div>
 </div>
