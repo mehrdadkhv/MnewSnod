@@ -14,10 +14,6 @@ const articleSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    imageCover: {
-      type: String,
-      required: [true, "تصویر برای کاور مقاله الزامی است"],
-    },
     images: [],
     body: {
       type: String,

@@ -1,15 +1,60 @@
 <div class="col-md-6 grid-margin stretch-card">
   <div class="card">
-    <form
-      action="/dashboard/articles"
-      method="POST"
-      enctype="multipart/form-data"
-    >
-      <div div class="card-body"><%- include('_form_fields') %></div>
+    <form action="/dashboard/articles" method="POST">
+      <div div class="card-body">
+        <div class="w-100 bg-black text-center">
+          <p id="uploadResult" class="overflow-auto">آدرس عکس آپلود شده</p>
+        </div>
+
+        <div class="form-group">
+          <label for="name">نام مقاله</label>
+          <input type="text" class="form-control" id="title" name="title" />
+        </div>
+        <div class="form-group">
+          <label for="name">summary</label>
+          <input type="text" class="form-control" id="summary" name="summary" />
+        </div>
+
+        <!-- ################################# -->
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <button class="btn btn-sm btn-outline-secondary" type="button" id="imageUpload">
+              آپلود عکس
+            </button>
+          </div>
+          <div class="custom-file">
+            <input type="file" id="selectedImage" />
+            <label id="imageStatus" for="selectedImage">
+              عکس مورد نظر را انتخاب کنید
+            </label>
+          </div>
+        </div>
+
+        <div id="progressDiv" style="display: none">
+          <div class="progress">
+            <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+              aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <select class="form-control" name="category" id="">
+            <% categories.forEach(category => { %>
+            <option value="<%= category._id %>"><%= category.title %></option>
+            <% }); %>
+          </select>
+        </div>
+        <textarea name="body" id="body" cols="30" rows="10"></textarea>
+
+        <button type="submit" class="btn btn-primary mr-2">Submit</button>
+        <button class="btn btn-light">Cancel</button>
+
+
+      </div>
     </form>
-    <div class="w-100 bg-light text-center">
-      <p id="uploadResult" class="overflow-auto">آدرس عکس آپلود شده</p>
-  </div>
+
+
 
   </div>
 </div>

@@ -6,6 +6,7 @@ const adminController = require("../controllers/adminController");
 const articleController = require("../controllers/articleController");
 const categoryController = require("../controllers/categoryController");
 
+
 const router = new Router();
 
 //@desc dashboard.
@@ -41,7 +42,7 @@ router.post("/edit-post/:id", authenticated, adminController.editPost);
 
 //@desc dashboard image-upload.
 //@route POST /dashboard/image-upload
-router.post("/image-upload", authenticated, adminController.uploadImage);
+// router.post("/image-upload", authenticated, adminController.uploadImage);
 
 // article routes
 router.get("/add-article", articleController.getArticle);
@@ -63,7 +64,7 @@ router.get("/articles/all", articleController.getArticle);
 router.get("/articles", articleController.createArticle);
 router.get("/articles", articleController.getArticle);
 router.post("/articles", articleController.storeArticle);
-router.post("/image-article", articleController.uploadImage);
+router.post("/image-article",authenticated, articleController.uploadImage);
 
 router.get("/articles/edit/:id", articleController.editArticle);
 router.get("/articles/:slug", articleController.slugArticle);

@@ -2,12 +2,13 @@ const multer = require("multer");
 const sharp = require("sharp");
 const shortId = require("shortid");
 
-const { fileFilter } = require("../utils/multer");
-
 const Article = require("../models/Article");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
-
+const {
+  storage,
+  fileFilter
+} = require("../utils/multer")
 exports.getArticle = async (req, res) => {
   const article = await Article.find({}).populate(
     "category",
@@ -95,20 +96,16 @@ exports.storeArticle = async (req, res) => {
 
     const articleCategoriesID = mongoose.Types.ObjectId(req.body.category);
 
-    Category.findByIdAndUpdate(
-      {
+    Category.findByIdAndUpdate({
         _id: articleCategoriesID,
-      },
-      {
+      }, {
         $push: {
           articles: newArticle._id,
         },
-      },
-      {
+      }, {
         new: true,
         useFindAndModify: false,
-      }
-    )
+      })
       .then((docs) => {
         if (docs) {
           console.log({
@@ -172,13 +169,16 @@ exports.deleteArticle = async (req, res) => {
 
 
 exports.uploadImage = (req, res) => {
-  
+
+
   const upload = multer({
       limits: { fileSize: 4000000 },
+      // dest: "uploads/",
+      // storage: storage,
       fileFilter: fileFilter,
   }).single("image");
-
-
+  //req.file
+  // console.log(req.file)
 
   upload(req, res, async (err) => {
       if (err) {
@@ -189,16 +189,18 @@ exports.uploadImage = (req, res) => {
           }
           res.status(400).send(err);
       } else {
-          if (req.file) {
+          if (req.files) {
+            console.log(req.files);
               const fileName = `${shortId.generate()}_${
-                  req.file.originalname
+                  req.files.image.name
               }`;
-              await sharp(req.file.buffer)
+              await sharp(req.files.image.data)
                   .jpeg({
                       quality: 60,
                   })
                   .toFile(`./public/uploads/${fileName}`)
                   .catch((err) => console.log(err));
+              // res.json({"message" : "", "address" : ""});
               res.status(200).send(
                   `http://localhost:3000/uploads/${fileName}`
               );
@@ -207,5 +209,4 @@ exports.uploadImage = (req, res) => {
           }
       }
   });
-
 };

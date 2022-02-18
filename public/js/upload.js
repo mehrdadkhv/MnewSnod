@@ -1,49 +1,48 @@
 document.getElementById("imageUpload").onclick = function () {
 
+    
+    let xhttp = new XMLHttpRequest(); // create new AJAX request
 
+    const selectedImage = document.getElementById("selectedImage");
+    const imageStatus = document.getElementById("imageStatus");
+    const progressDiv = document.getElementById("progressDiv");
+    const progressBar = document.getElementById("progressBar");
+    const uploadResult = document.getElementById("uploadResult");
 
-  let xhttp = new XMLHttpRequest(); // create new AJAX request
+    // xhttp.responseType = "json";
 
-  const selectedImage = document.getElementById("selectedImage");
-  const imageStatus = document.getElementById("imageStatus");
-  const progressDiv = document.getElementById("progressDiv");
-  const progressBar = document.getElementById("progressBar");
-  const uploadResult = document.getElementById("uploadResult");
+    xhttp.onreadystatechange = function () {
+        if (xhttp.status === 200) {
+            imageStatus.innerHTML = "آپلود عکس موفقیت آمیز بود"; //this.response.message
+            uploadResult.innerHTML =   this.responseText; //this.response.address
+            selectedImage.value = "";
+        } else {
+            imageStatus.innerHTML = this.responseText;
+        }
+    };
 
-  // xhttp.responseType = "json";
+    xhttp.open("POST", "/dashboard/image-article");
 
-  xhttp.onreadystatechange = function () {
-      if (xhttp.status === 200) {
-          imageStatus.innerHTML = "آپلود عکس موفقیت آمیز بود"; //this.response.message
-          uploadResult.innerHTML = this.response.address
-          selectedImage.value = ""; //? Input file clear
-      } else {
-          imageStatus.innerHTML = this.responseText;
-      }
-  };
+    xhttp.upload.onprogress = function (e) {
+        if (e.lengthComputable) {
+            let result = Math.floor((e.loaded / e.total) * 100);
+            // console.log(result + "%");
+            if (result !== 100) {
+                progressBar.innerHTML = result + "%";
+                progressBar.style = "width:" + result + "%";
+            } else {
+                progressDiv.style = "display: none";
+            }
+        }
+    };
 
-  xhttp.open("POST", "/dashboard/image-article");
+    let formData = new FormData();
 
-  xhttp.upload.onprogress = function (e) {
-      if (e.lengthComputable) {
-          let result = Math.floor((e.loaded / e.total) * 100);
-          // console.log(result + "%");
-          if (result !== 100) {
-              progressBar.innerHTML = result + "%";
-              progressBar.style = "width:" + result + "%";
-          } else {
-              progressDiv.style = "display: none";
-          }
-      }
-  };
-
-  let formData = new FormData();
-
-  if (selectedImage.files.length > 0) {
-      progressDiv.style = "display: block";
-      formData.append("image", selectedImage.files[0]);
-      xhttp.send(formData);
-  } else {
-      imageStatus.innerHTML = "برای آپلود باید عکسی انتخاب کنید";
-  }
+    if (selectedImage.files.length > 0) {
+        progressDiv.style = "display: block";
+        formData.append("image", selectedImage.files[0]);
+        xhttp.send(formData);
+    } else {
+        imageStatus.innerHTML = "برای آپلود باید عکسی انتخاب کنید";
+    }
 };
