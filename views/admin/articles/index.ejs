@@ -10,6 +10,7 @@
                         <th>عنوان</th>
                         <th>تاریخ</th>
                         <th>وضعیت</th>
+                        <th>دسته بندی</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,7 +28,7 @@
                             <td>
 
                                 <td>
-                                    <a href="/dashboard/categories/<%=JSON.parse(JSON.stringify(article.categories))?.slug %>" class="text-white">
+                                    <a href="/dashboard/categories/<%=JSON.parse(JSON.stringify(article.category))?.slug %>" class="text-white">
                                         <%# console.log(JSON.parse(JSON.stringify(article.category))[0]?.title); %> 
                                      
                                         <%=JSON.parse(JSON.stringify(article.category))[0]?.title %>
@@ -35,7 +36,7 @@
 
                                 <a href="/dashboard/edit-article/<%= article._id %>"
                                     class="btn btn-sm btn-info">ویرایش</a>
-                                <a href="/dashboard/delete-article/<%= article._id %>"
+                                <a href="/dashboard/articles/<%= article._id %>"
                                     class="btn btn-sm btn-danger">حذف</a>
                             </td>
                             

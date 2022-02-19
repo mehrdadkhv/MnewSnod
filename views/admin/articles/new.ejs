@@ -41,6 +41,8 @@
           <label for="category">Category</label>
           <select class="form-control" name="category" id="">
             <% categories.forEach(category => { %>
+             
+  
             <option value="<%= category._id %>"><%= category.title %></option>
             <% }); %>
           </select>

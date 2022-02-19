@@ -19,7 +19,7 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    categories: [
+    category: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Category",
@@ -39,7 +39,7 @@ const articleSchema = new mongoose.Schema(
   // { virtual: true }
 );
 
-articleSchema.virtual("category", {
+articleSchema.virtual("categories", {
   ref: "Category",
   localField: "_id",
   foreignField: "articles",

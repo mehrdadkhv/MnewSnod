@@ -65,10 +65,9 @@ router.get("/articles", articleController.createArticle);
 router.get("/articles", articleController.getArticle);
 router.post("/articles", articleController.storeArticle);
 router.post("/image-article",authenticated, articleController.uploadImage);
-
-router.get("/articles/edit/:id", articleController.editArticle);
-router.get("/articles/:slug", articleController.slugArticle);
-router.put("/articles/:id", articleController.updateArticle);
-router.delete("/articles/:id", articleController.deleteArticle);
+router.get("/edit-article/:id", articleController.getEditArticle);
+router.post("/edit-article/:id", articleController.editArticle);
+// router.get("/articles/:slug", articleController.slugArticle);
+router.get("/articles/:id", articleController.deleteArticle);
 
 module.exports = router;

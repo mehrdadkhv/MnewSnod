@@ -5,11 +5,17 @@ const shortId = require("shortid");
 const Article = require("../models/Article");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
-const {
-  storage,
-  fileFilter
-} = require("../utils/multer")
+const { fileFilter } = require("../utils/multer");
+
+
+
+
+
 exports.getArticle = async (req, res) => {
+
+  
+
+
   const article = await Article.find({}).populate(
     "category",
     "-_id title slug"
@@ -37,20 +43,62 @@ exports.createArticle = async (req, res) => {
   });
 };
 
+exports.getEditArticle = async (req, res) => {
+  const category = await Category.find({});
+
+  const article = await Article.findOne({
+    _id : req.params.id
+  }).populate(
+    "category",
+    "title slug"
+  )
+
+  if(!article){
+    return res.redirect("errors/404")
+  }
+
+  
+  // console.log(article.category[0].title);
+ 
+  res.render("admin/articles/edit", {
+    pageTitle: "بخش مدیریت |ویرایش مقاله ",
+    path: "/admin/editArticle",
+    layout: "./layouts/dashLayout",
+    fullname: category.title,
+    categories: category,
+    article
+  });
+
+}
+
 exports.editArticle = async (req, res) => {
+
+  const errArr = [];
+  const article = await Article.findById(req.params.id);
   try {
-    const article = await Article.findById(req.params.id);
-    res.render("admin/articles/edits", {
-      article,
-      path: "/admin/addArticles",
-      layout: "./layouts/dashLayout",
-      fullname: req.user.fullname,
-    });
+
+    if(!article){
+      return res.redirect("errors/404")
+    }
+    
+
+    const { title,summary,description,body,category} =req.body;
+    article.title = title;
+
+    article.description = description;
+    article.summary = summary;
+    article.body = body;
+    article.category = category;
+
+    await article.save();
+    return res.redirect("/dashboard")
+
   } catch (error) {
     res.render("admin/articles/edits", {
-      path: "/admin/edit-article",
+      path: "/admin/editArticle",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
+      article
     });
     console.log(error);
   }
@@ -82,6 +130,7 @@ exports.storeArticle = async (req, res) => {
   const Allcategory = await Category.find({});
 
   let category = req.body.category ? req.body.category : null;
+ 
 
   try {
     const newArticle = await Article.create({
@@ -91,21 +140,25 @@ exports.storeArticle = async (req, res) => {
       description: req.body.description,
       body: req.body.body,
       category: category,
-      categories: Allcategory,
+      
     });
 
     const articleCategoriesID = mongoose.Types.ObjectId(req.body.category);
 
-    Category.findByIdAndUpdate({
+    Category.findByIdAndUpdate(
+      {
         _id: articleCategoriesID,
-      }, {
+      },
+      {
         $push: {
           articles: newArticle._id,
         },
-      }, {
+      },
+      {
         new: true,
         useFindAndModify: false,
-      })
+      }
+    )
       .then((docs) => {
         if (docs) {
           console.log({
@@ -140,73 +193,56 @@ exports.storeArticle = async (req, res) => {
   }
 };
 
-exports.updateArticle = async (req, res) => {
-  try {
-    req.article = await Article.findById(req.params.id);
-  } catch (error) {
-    res.render("errors/500", {
-      pageTitle: "خطای سرور | 500",
-      page: "/500",
-      layout: "errors/500",
-    });
-    console.log(error);
-  }
-};
 
 exports.deleteArticle = async (req, res) => {
   try {
-    await Article.findByIdAndDelete(req.params.id);
-    res.redirect("/dashboard");
+    console.log('da');
+    await Article.findByIdAndRemove(req.params.id);
+    res.redirect("/dashboard/articles/all");
   } catch (error) {
     res.render("errors/500", {
       pageTitle: "خطای سرور | 500",
       page: "/500",
       layout: "errors/500",
+    
     });
     console.log(error);
   }
 };
 
-
 exports.uploadImage = (req, res) => {
-
-
   const upload = multer({
-      limits: { fileSize: 4000000 },
-      // dest: "uploads/",
-      // storage: storage,
-      fileFilter: fileFilter,
+    limits: { fileSize: 4000000 },
+    // dest: "uploads/",
+    // storage: storage,
+    fileFilter: fileFilter,
   }).single("image");
   //req.file
   // console.log(req.file)
 
   upload(req, res, async (err) => {
-      if (err) {
-          if (err.code === "LIMIT_FILE_SIZE") {
-              return res
-                  .status(400)
-                  .send("حجم عکس ارسالی نباید بیشتر از 4 مگابایت باشد");
-          }
-          res.status(400).send(err);
-      } else {
-          if (req.files) {
-            console.log(req.files);
-              const fileName = `${shortId.generate()}_${
-                  req.files.image.name
-              }`;
-              await sharp(req.files.image.data)
-                  .jpeg({
-                      quality: 60,
-                  })
-                  .toFile(`./public/uploads/${fileName}`)
-                  .catch((err) => console.log(err));
-              // res.json({"message" : "", "address" : ""});
-              res.status(200).send(
-                  `http://localhost:3000/uploads/${fileName}`
-              );
-          } else {
-              res.send("جهت آپلود باید عکسی انتخاب کنید");
-          }
+    if (err) {
+      if (err.code === "LIMIT_FILE_SIZE") {
+        return res
+          .status(400)
+          .send("حجم عکس ارسالی نباید بیشتر از 4 مگابایت باشد");
       }
+      res.status(400).send(err);
+    } else {
+      if (req.files) {
+       
+        const fileName = `${shortId.generate()}_${req.files.image.name}`;
+        await sharp(req.files.image.data)
+          .jpeg({
+            quality: 60,
+          })
+          .toFile(`./public/uploads/${fileName}`)
+          .catch((err) => console.log(err));
+        // res.json({"message" : "", "address" : ""});
+        res.status(200).send(`http://localhost:3000/uploads/${fileName}`);
+      } else {
+        res.send("جهت آپلود باید عکسی انتخاب کنید");
+      }
+    }
   });
 };
