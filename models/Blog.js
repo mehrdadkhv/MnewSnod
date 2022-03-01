@@ -16,7 +16,7 @@ const blogSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    defunct: "public",
+    default: "public",
     enum: ["public", "private"],
   },
   thumbnail: {

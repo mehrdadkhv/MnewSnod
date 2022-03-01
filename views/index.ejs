@@ -2,21 +2,33 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8">
+        <% if(LastArticle.length > 0) {%> <% for(let article of LastArticle){ %>
+
         <div class="single-main-news">
-          <a href="#">
-            <img src="/blog/assets/img/main-news/main-news-1.jpg" alt="image" />
+          <a href="/article/<%= article._id %>">
+            <img
+              src="http://localhost:3000/uploads/thumbnails/<%= article.image %> "
+              alt="image"
+            />
           </a>
           <div class="news-content">
             <div class="tag">جدید</div>
             <h3>
-              <a href="#"
-                >لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با
-                استفاده از طراحان گرافیک است
+              <a href="/article/<%= article._id %>">
+                <%- truncate(article.summary,200) %>
               </a>
             </h3>
-            <span><a href="#">Walters</a> / 14 September, 2021</span>
+            <span
+              ><a href="/article/<%= article._id %>">Walters</a> / 14 September,
+              2021</span
+            >
           </div>
         </div>
+
+        <% } %> <% } else { %>
+
+        <h4>kein articles</h4>
+        <% } %>
       </div>
       <div class="col-lg-4">
         <div class="single-main-news-inner">
@@ -303,7 +315,7 @@
         </div>
         <div class="politics-news">
           <div class="section-title">
-            <h2>Politics</h2>
+            <h2>سیاست</h2>
           </div>
           <div class="row">
             <div class="col-lg-6">
@@ -329,13 +341,15 @@
               </div>
             </div>
             <div class="col-lg-6">
+              <% if(policArticke.length > 0) {%> <% for(let article of
+              policArticke){ %>
               <div class="politics-news-post">
                 <div class="row align-items-center">
                   <div class="col-lg-4 col-sm-4">
                     <div class="politics-news-image">
                       <a href="#">
                         <img
-                          src="/blog/assets/img/politics-news/politics-news-2.jpg"
+                          src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
                           alt="image"
                         />
                       </a>
@@ -344,63 +358,23 @@
                   <div class="col-lg-8 col-sm-8">
                     <div class="politics-news-content">
                       <h3>
-                        <a href="#"
-                          >Politically, new riots have started inside the
-                          country</a
+                        <a href="/article/<%= article._id %>"
+                          ><%- truncate(article.summary,200) %></a
                         >
                       </h3>
-                      <p>28 September, 2021</p>
+                      <p>
+                        <span
+                          >پست شده <%= formatDate(article.createdAt) %>
+                        </span>
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="politics-news-post">
-                <div class="row align-items-center">
-                  <div class="col-lg-4 col-sm-4">
-                    <div class="politics-news-image">
-                      <a href="#">
-                        <img
-                          src="/blog/assets/img/politics-news/politics-news-3.jpg"
-                          alt="image"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-lg-8 col-sm-8">
-                    <div class="politics-news-content">
-                      <h3>
-                        <a href="#">Public discussion in 5 major issues</a>
-                      </h3>
-                      <p>28 September, 2021</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="politics-news-post">
-                <div class="row align-items-center">
-                  <div class="col-lg-4 col-sm-4">
-                    <div class="politics-news-image">
-                      <a href="#">
-                        <img
-                          src="/blog/assets/img/politics-news/politics-news-4.jpg"
-                          alt="image"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-lg-8 col-sm-8">
-                    <div class="politics-news-content">
-                      <h3>
-                        <a href="#"
-                          >Preparations are being made in a new way for the
-                          elections</a
-                        >
-                      </h3>
-                      <p>28 September, 2021</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <% } %> <% } else { %>
+
+              <h4>kein articles</h4>
+              <% } %>
             </div>
           </div>
         </div>
@@ -840,68 +814,32 @@
       <div class="col-lg-4">
         <aside class="widget-area">
           <section class="widget widget_latest_news_thumb">
-            <h3 class="widget-title">Latest news</h3>
+            <h3 class="widget-title">آخرین خبر</h3>
+
+            <% if(LastArticles.length > 0) {%> <% for(let article of
+            LastArticles){ %>
+
             <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg1" role="img"></span>
+              <a href="/article/<%= article._id %> " class="thumb">
+                <img
+                  src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
+                  alt="image"
+                />
               </a>
               <div class="info">
                 <h4 class="title usmall">
-                  <a href="#"
-                    >Negotiations on a peace agreement between the two
-                    countries</a
-                  >
+                  <a href="/article/<%= article._id %> ">
+                    <%- truncate(article.summary,400) %>
+                  </a>
                 </h4>
-                <span>28 September, 2021</span>
+                <span>پست شده <%= formatDate(article.createdAt) %> </span>
               </div>
             </article>
-            <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg2" role="img"></span>
-              </a>
-              <div class="info">
-                <h4 class="title usmall">
-                  <a href="#">Love songs helped me through heartbreak</a>
-                </h4>
-                <span>28 September, 2021</span>
-              </div>
-            </article>
-            <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg3" role="img"></span>
-              </a>
-              <div class="info">
-                <h4 class="title usmall">
-                  <a href="#">This movement aims to establish women rights</a>
-                </h4>
-                <span>28 September, 2021</span>
-              </div>
-            </article>
-            <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg4" role="img"></span>
-              </a>
-              <div class="info">
-                <h4 class="title usmall">
-                  <a href="#"
-                    >Giving special powers to police officers to prevent
-                    crime</a
-                  >
-                </h4>
-                <span>28 September, 2021</span>
-              </div>
-            </article>
-            <article class="item">
-              <a href="#" class="thumb">
-                <span class="fullimage cover bg5" role="img"></span>
-              </a>
-              <div class="info">
-                <h4 class="title usmall">
-                  <a href="#">Copy paste the style of your element Newspaper</a>
-                </h4>
-                <span>28 September, 2021</span>
-              </div>
-            </article>
+
+            <% } %> <% } else { %>
+
+            <h4>kein articles</h4>
+            <% } %>
           </section>
           <section class="widget widget_featured_reports">
             <h3 class="widget-title">Featured reports</h3>

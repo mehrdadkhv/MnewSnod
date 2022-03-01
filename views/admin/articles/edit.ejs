@@ -1,10 +1,31 @@
 <div class="col-md-6 grid-margin stretch-card">
   <div class="card">
     <h2>ویرایش پست</h2>
-    <form action="/dashboard/edit-article/<%= article._id %> " method="POST">
+    <form
+      action="/dashboard/edit-article/<%= article._id %> "
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <div div class="card-body">
         <div class="w-100 bg-black text-center">
           <p id="uploadResult" class="overflow-auto">آدرس عکس آپلود شده</p>
+        </div>
+
+        <label for="selectedThumbnail">عکس بند انگشتی</label>
+        <div class="input-group mb-3">
+          <input
+            type="file"
+            class="custom-file-input"
+            name="image"
+            id="selectedThumbnail"
+            aria-describedby="inputGroupFileAddon03"
+          />
+          <label
+            id="thumbStatus"
+            class="custom-file-label"
+            for="inputGroupFile03"
+            >عکس مورد نظر را انتخاب کنید</label
+          >
         </div>
 
         <div class="form-group">
@@ -19,7 +40,14 @@
         </div>
         <div class="form-group">
           <label for="name">summary</label>
-          <input type="text" class="form-control" id="summary" name="summary" value="<%= article.summary %>"  %>" />
+          <input
+            type="text"
+            class="form-control"
+            id="summary"
+            name="summary"
+            value="<%= article.summary %>"
+            %
+          />
         </div>
 
         <!-- ################################# -->
@@ -56,13 +84,17 @@
         <div class="form-group">
           <label for="category">Category</label>
           <select class="form-control" name="category" id="">
-            <option value="<%= article.category[0]._id%>" selected><%= article.category[0].title%></option>
+            <option value="<%= article.category[0]._id%>" selected>
+              <%= article.category[0].title%>
+            </option>
             <% categories.forEach(category => { %>
-                <option value="<%= category._id %>"><%= category.title%></option>
+            <option value="<%= category._id %>"><%= category.title%></option>
             <% }); %>
           </select>
         </div>
-        <textarea name="body" id="body" cols="30" rows="10"><%= article.body  %>"</textarea>
+        <textarea name="body" id="body" cols="30" rows="10">
+<%= article.body  %></textarea
+        >
 
         <button type="submit" class="btn btn-primary mr-2">ویرایش پست</button>
         <a class="btn btn-light" href="/dashboard">انصراف</a>

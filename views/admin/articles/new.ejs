@@ -1,10 +1,33 @@
 <div class="col-md-6 grid-margin stretch-card">
   <div class="card">
-    <form action="/dashboard/articles" method="POST">
+    <form
+      action="/dashboard/articles"
+      method="POST"
+      enctype="multipart/form-data"
+    >
       <div div class="card-body">
         <div class="w-100 bg-black text-center">
           <p id="uploadResult" class="overflow-auto">آدرس عکس آپلود شده</p>
         </div>
+
+        <!-- ###########################################addpictump -->
+        <label for="selectedThumbnail">عکس بند انگشتی</label>
+        <div class="input-group mb-3">
+          <input
+            type="file"
+            class="custom-file-input"
+            name="image"
+            id="selectedThumbnail"
+            aria-describedby="inputGroupFileAddon03"
+          />
+          <label
+            id="thumbStatus"
+            class="custom-file-label"
+            for="inputGroupFile03"
+            >عکس مورد نظر را انتخاب کنید</label
+          >
+        </div>
+        <!-- ########################################### end addpictump -->
 
         <div class="form-group">
           <label for="name">نام مقاله</label>
@@ -18,7 +41,11 @@
         <!-- ################################# -->
         <div class="input-group mb-3">
           <div class="input-group-prepend">
-            <button class="btn btn-sm btn-outline-secondary" type="button" id="imageUpload">
+            <button
+              class="btn btn-sm btn-outline-secondary"
+              type="button"
+              id="imageUpload"
+            >
               آپلود عکس
             </button>
           </div>
@@ -32,8 +59,13 @@
 
         <div id="progressDiv" style="display: none">
           <div class="progress">
-            <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-              aria-valuemin="0" aria-valuemax="100"></div>
+            <div
+              id="progressBar"
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              aria-valuemin="0"
+              aria-valuemax="100"
+            ></div>
           </div>
         </div>
 
@@ -41,8 +73,7 @@
           <label for="category">Category</label>
           <select class="form-control" name="category" id="">
             <% categories.forEach(category => { %>
-             
-  
+
             <option value="<%= category._id %>"><%= category.title %></option>
             <% }); %>
           </select>
@@ -51,12 +82,7 @@
 
         <button type="submit" class="btn btn-primary mr-2">Submit</button>
         <button class="btn btn-light">Cancel</button>
-
-
       </div>
     </form>
-
-
-
   </div>
 </div>

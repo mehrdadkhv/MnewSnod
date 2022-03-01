@@ -14,7 +14,10 @@ const articleSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    images: [],
+    image: {
+      type: String,
+      required: true,
+    },
     body: {
       type: String,
       required: true,
@@ -25,9 +28,8 @@ const articleSchema = new mongoose.Schema(
         ref: "Category",
       },
     ],
-
-    categoryAt: {
-      type: String,
+    createdAt: {
+      type: Date,
       default: Date.now,
     },
     slug: {

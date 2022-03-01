@@ -1,4 +1,5 @@
 const Blog = require("../models/Blog");
+const Article = require("../models/Article");
 const { formatDate } = require("../utils/jalali");
 const { truncate } = require("../utils/helpers");
 
@@ -7,16 +8,53 @@ exports.getIndex = async (req, res) => {
     const posts = await Blog.find({ status: "public" }).sort({
       createdAt: "desc",
     });
+
+    const LastArticle = await Article.find({}).limit(1).sort({
+      createdAt: "desc",
+    });
+
+    const LastArticles = await Article.find({}).limit(4).sort({
+      createdAt: "desc",
+    });
+
+    const policArticke = await Article.find().limit(3);
+    const policArticketest = await Article.find()
+      .limit(3)
+      .populate("category", "title slug");
+
     res.render("index", {
       pageTitle: " MNews | صفحه اصلی",
       path: "/",
       posts,
       formatDate,
       truncate,
+      LastArticles,
+      LastArticle,
+      policArticke,
     });
   } catch (err) {
     console.log(err);
     res.render("errors/500");
+  }
+};
+
+exports.getSingleArticle = async (req, res) => {
+  try {
+    const article = await Article.findOne({ _id: req.params.id }).populate(
+      "category"
+    );
+
+    if (!article) return res.redirect("errors/404");
+
+    res.render("article", {
+      pageTitle: article.title,
+      path: "/article",
+      article,
+      formatDate,
+    });
+  } catch (err) {
+    console.log(err);
+    res.redirect("errors/500");
   }
 };
 

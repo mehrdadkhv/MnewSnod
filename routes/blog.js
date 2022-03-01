@@ -9,6 +9,10 @@ const router = new Router();
 // @route GET
 router.get("/", blogController.getIndex);
 
+// @desc weblog article page
+// @route GET /article/:id
+router.get("/article/:id", blogController.getSingleArticle);
+
 router.get("/demo", authenticated, blogController.getDemo);
 router.get("/post/:id", blogController.getSinglePost);
 
