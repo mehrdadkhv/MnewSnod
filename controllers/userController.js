@@ -1,6 +1,7 @@
 // const bcrypt = require("bcrypt");
 const passport = require("passport");
 const fetch = require("node-fetch");
+const { sendEmail } = require("../utils/mailer");
 
 const User = require("../models/user");
 
@@ -39,6 +40,12 @@ exports.handleLogin = async (req, res, next) => {
       failureRedirect: "/users/login",
       failureFlash: true,
     })(req, res, next);
+
+    // send welcome email
+    sendEmail(req.body.email, req.body.email, "خوش آمدی", "خوش برگشتی");
+
+    // const userFullName = console.log(req);
+    // sendEmail(req, res, next);
   } else {
     req.flash("error", "مشکل در اعتبار سنجی captcha هست");
     res.redirect("/users/login");
