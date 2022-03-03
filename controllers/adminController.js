@@ -26,6 +26,11 @@ exports.getDashboard = async (req, res) => {
       .skip((page - 1) * postPerPage)
       .limit(postPerPage);
 
+    res.set(
+      "Cache-Control",
+      "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+    );
+
     res.render("admin/homeDashboard", {
       pageTitle: "Admin Dashboard",
       path: "/dashboard",

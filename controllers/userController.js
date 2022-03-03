@@ -7,6 +7,11 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/user");
 
 exports.login = (req, res) => {
+  res.set(
+    "Cache-Control",
+    "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+  );
+
   res.render("login", {
     path: "/login",
     pageTitle: "ورود به بخش ",
@@ -66,6 +71,11 @@ exports.rememberMe = (req, res) => {
 exports.logout = (req, res) => {
   req.session = null;
   req.logout();
+  res.set(
+    "Cache-Control",
+    "no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0"
+  );
+
   res.redirect("/users/login");
 };
 
