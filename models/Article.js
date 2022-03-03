@@ -41,6 +41,8 @@ const articleSchema = new mongoose.Schema(
   // { virtual: true }
 );
 
+articleSchema.index({ title: "text" });
+
 articleSchema.virtual("categories", {
   ref: "Category",
   localField: "_id",

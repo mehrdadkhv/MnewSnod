@@ -11,6 +11,7 @@ const { formatDate } = require("../utils/jalali");
 const { get500 } = require("../controllers/errorController");
 const { fileFilter } = require("../utils/multer");
 const Category = require("../models/Category");
+const Article = require("../models/Article");
 
 exports.getDashboard = async (req, res) => {
   const page = +req.query.page || 1;
@@ -283,4 +284,48 @@ exports.uploadImage = (req, res) => {
       }
     }
   });
+};
+
+exports.handleDashSearch = async (req, res) => {
+  try {
+    const page = +req.query.page || 1; //string to number
+    const articlePrePage = 10;
+
+    const numberOfArticle = await Article.find({
+      $text: { $search: req.body.search },
+    }).countDocuments();
+
+    const article = await Article.find({
+      $text: { $search: req.body.search },
+    })
+      .populate("category", "-_id title slug")
+      .skip((page - 1) * articlePrePage)
+      .limit(articlePrePage);
+
+    const category = await Category.find({});
+
+    res.render("admin/articles/index", {
+      pageTitle: "بخش مدیریت |   تمام مقالات",
+      path: "/admin/addArticles",
+      layout: "./layouts/dashLayout",
+      articles: article,
+      categories: category,
+      currentPage: page,
+      nextPage: page + 1,
+      previousPage: page - 1,
+      hasNextPage: articlePrePage * page < numberOfArticle,
+      hasPreviousPage: page > 1,
+      lastPage: Math.ceil(numberOfArticle / articlePrePage),
+    });
+  } catch (err) {
+    const category = await Category.find({});
+
+    console.log(err);
+    res.render("admin/includes/keinArticle.ejs", {
+      pageTitle: "خطای سرور | 500",
+      layout: "./layouts/dashLayout",
+      path: "/500",
+      categories: category,
+    });
+  }
 };

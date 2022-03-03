@@ -5,6 +5,7 @@ const Article = require("../models/Article");
 const { formatDate } = require("../utils/jalali");
 const { truncate } = require("../utils/helpers");
 const { sendEmail } = require("../utils/mailer");
+const Category = require("../models/Category");
 
 let CAPTCHA_NUM;
 
