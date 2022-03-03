@@ -1,0 +1,169 @@
+<section class="contact-area ptb-50">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <div style="width: 100%">
+          <iframe
+            width="100%"
+            height="600"
+            frameborder="0"
+            scrolling="no"
+            marginheight="0"
+            marginwidth="0"
+            src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=babolsar+(mnews)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
+            ><a href="https://www.gps.ie/truck-gps/"
+              >delivery trucks gps</a
+            ></iframe
+          >
+        </div>
+        <ul class="contact-info">
+          <li>
+            <span>آدرس:</span>
+            3533 Babolsar, FL 23546
+          </li>
+          <li>
+            <span>تلفن تماس:</span>
+            <a href="tel:15143125678">+98 (011)312-5678</a>
+          </li>
+        </ul>
+        <div class="contact-form">
+          <div class="title">
+            <h3>آماده شروع هستید ؟</h3>
+            <p>ایمیل شمابه هیچ عنوان نمایش داده نخواهد شد</p>
+          </div>
+          <p><%- include("./includes/loginMessage.ejs") %></p>
+
+          <form action="/contact" method="post">
+            <div class="row">
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    name="fullname"
+                    class="form-control"
+                    id="name"
+                    required
+                    data-error="لطفا نام و نام خانوادگی را وارد کنید"
+                    placeholder="نام و نام خانوادگی"
+                  />
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6">
+                <div class="form-group">
+                  <input
+                    type="email"
+                    name="email"
+                    class="form-control"
+                    id="email"
+                    required
+                    data-error="لطفا ایمیل خود را وارد کنید"
+                    placeholder="ایمیل"
+                  />
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+
+              <div class="col-lg-12 col-md-12">
+                <div class="form-group">
+                  <textarea
+                    name="message"
+                    id="message"
+                    class="form-control"
+                    cols="30"
+                    rows="6"
+                    required
+                    data-error="لطفا پیام خود را وارد کنید"
+                    placeholder="پیام خود را بنویسید...."
+                  ></textarea>
+                  <div class="help-block with-errors"></div>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <img src="/captcha.png" alt="captcha" />
+                <input
+                  type="text"
+                  class="form-control"
+                  name="captcha"
+                  required
+                  data-error="لطفا ثابت کنید ربات نیستید"
+                  placeholder="کد امنیتی"
+                />
+              </div>
+              <div class="col-lg-12 col-md-12">
+                <button type="submit" class="default-btn">ارسال پیام</button>
+
+                <!-- <div id="msgSubmit" class="h3 text-center hidden">
+                </div> -->
+                <!-- <div class="clearfix"></div> -->
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <aside class="widget-area">
+          <section class="widget widget_stay_connected">
+            <h3 class="widget-title">در تماس باشید</h3>
+            <ul class="stay-connected-list">
+              <li>
+                <a href="#">
+                  <i class="bx bxl-facebook"></i>
+                  120,345 Fans
+                </a>
+              </li>
+              <li>
+                <a href="#" class="twitter">
+                  <i class="bx bxl-twitter"></i>
+                  25,321 Followers
+                </a>
+              </li>
+              <li>
+                <a href="#" class="linkedin">
+                  <i class="bx bxl-linkedin"></i>
+                  7,519 Connect
+                </a>
+              </li>
+              <li>
+                <a href="#" class="youtube">
+                  <i class="bx bxl-youtube"></i>
+                  101,545 Subscribers
+                </a>
+              </li>
+              <li>
+                <a href="#" class="instagram">
+                  <i class="bx bxl-instagram"></i>
+                  10,129 Followers
+                </a>
+              </li>
+              <li>
+                <a href="#" class="wifi">
+                  <i class="bx bx-wifi"></i>
+                  952 Subscribers
+                </a>
+              </li>
+            </ul>
+          </section>
+          <section class="widget widget_newsletter">
+            <div class="newsletter-content">
+              <h3>Subscribe to our newsletter</h3>
+              <p>Subscribe to our newsletter to get the new updates!</p>
+            </div>
+            <form class="newsletter-form" data-toggle="validator">
+              <input
+                type="email"
+                class="input-newsletter"
+                placeholder="Enter your email"
+                name="EMAIL"
+                required
+                autocomplete="off"
+              />
+              <button type="submit">Subscribe</button>
+              <div id="validator-newsletter" class="form-result"></div>
+            </form>
+          </section>
+        </aside>
+      </div>
+    </div>
+  </div>
+</section>

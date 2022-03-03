@@ -5,11 +5,10 @@ const transporter = nodemailer.createTransport({
   host: "smtp.ethereal.email",
   port: 587,
   auth: {
-    user: "wilhelmine.russel62@ethereal.email",
-    pass: "Ugsr7SSgRYJJwtTVKw",
+    user: "enav5dijncz2p7w7@ethereal.email",
+    pass: "B4hYcghEUSu2hT3GSs",
   },
 });
-
 // Message object
 let message = {
   from: "ali@gmail.com",
