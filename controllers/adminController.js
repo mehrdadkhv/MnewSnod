@@ -2,7 +2,7 @@ const fs = require("fs");
 
 const multer = require("multer");
 const sharp = require("sharp");
-const shortId = require("shortId");
+const shortId = require("shortid");
 const appRoot = require("app-root-path");
 
 const Blog = require("../models/Blog");
