@@ -2,9 +2,9 @@ const path = require("path");
 
 const debug = require("debug")("weblog-project");
 const fileUpload = require("express-fileupload");
-const bodyParser = require("body-parser");
 const express = require("express");
 const mongoose = require("mongoose");
+
 const expressLayouts = require("express-ejs-layouts");
 const passport = require("passport");
 const dotEnv = require("dotenv");
@@ -12,15 +12,26 @@ const morgan = require("morgan");
 const flash = require("connect-flash");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
-
-const connectDB = require("./config/db");
-const winston = require("./config/winston");
+const dotenv = require("dotenv");
 
 // load config
-dotEnv.config({ path: "./config/config.env" });
+dotenv.config({ path: "./config/config.env" });
 
 // database connection
-connectDB();
+// connectDB();
+const DB = process.env.MONGO_URI.replace(
+  "<PASSWORD>",
+  process.env.DATABASE_PASSWORD
+);
+
+mongoose
+  .connect(DB, {
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    () => console.log("DB connection successful!");
+  });
+
 debug("Connecting to Database");
 
 //* Passwport Configuration
@@ -47,11 +58,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // file upload middleware
-
 app.use(fileUpload());
 
 //* session
-
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -81,8 +90,12 @@ app.use("/dashboard", require("./routes/dashboard"));
 //& 404 page
 app.use(require("./controllers/errorController").get404);
 
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () =>
-  console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
-);
+// app.listen(PORT, () =>
+//   console.log(`Server running in ${process.env.NODE_ENV} on port ${PORT}`)
+// );
+const port = process.env.PORT || 3000;
+const server = app.listen(port, () => {
+  console.log(`App running on port ${port}...`);
+});

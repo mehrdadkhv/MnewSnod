@@ -19,7 +19,7 @@
     "connect-mongo": "^3.2.0",
     "connect-multiparty": "^2.2.0",
     "debug": "^4.3.3",
-    "dotenv": "^14.2.0",
+    "dotenv": "^14.3.2",
     "ejs": "^3.1.6",
     "eslint-config-prettier": "^8.3.0",
     "express": "^4.17.2",
