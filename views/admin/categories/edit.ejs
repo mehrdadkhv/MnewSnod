@@ -1,0 +1,28 @@
+<div class="col-md-6 grid-margin stretch-card">
+  <div class="card">
+    <form
+      action="/dashboard/categories/update/<%= category._id %>"
+      method="POST"
+    >
+      <div div class="card-body">
+        <div class="form-group">
+          <label for="name">ویرایش نام دسته بندی</label>
+          <input
+            value="<%= category.title %>"
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+          />
+        </div>
+        <a
+          href="/dashboard/categories-del/<%= category._id %>"
+          class="btn btn-danger"
+          >حذف</a
+        >
+        <button type="submit" class="btn btn-primary">ویرایش</button>
+        <button class="btn btn-light">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

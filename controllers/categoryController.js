@@ -1,4 +1,6 @@
 const Category = require("../models/Category");
+const { formatDate } = require("../utils/jalali");
+const { truncate } = require("../utils/helpers");
 
 const { buildAncestors } = require("../utils/buildAncestors");
 
@@ -17,12 +19,15 @@ exports.getCategory = async (req, res) => {
 
 exports.editCategory = async (req, res) => {
   try {
+    const categories = await Category.find({});
     const category = await Category.findById(req.params.id);
-    res.render("admin/updateCategory", {
+    res.render("admin/categories/edit", {
+      pageTitle: "ویرایش دسته بندی",
       category,
       path: "/admin/edit-category",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
+      categories,
     });
   } catch (error) {
     res.render("admin/updateCategory", {
@@ -51,7 +56,8 @@ exports.slugCategory = async (req, res) => {
       fields: "title slug",
     });
 
-    console.log(ariclesCategory[0]._id);
+    // console.log(ariclesCategory[0].articles);
+
     if (category == null) res.redirect("/dashboard");
     res.render("admin/categories/show", {
       pageTitle: req.params.slug,
@@ -61,6 +67,8 @@ exports.slugCategory = async (req, res) => {
       category,
       ariclesCategory,
       categories: Allcategory,
+      formatDate,
+      truncate,
     });
   } catch (error) {
     res.render("errors/500", {
@@ -100,8 +108,14 @@ exports.sotreCategory = async (req, res) => {
 
 exports.updateCategory = async (req, res) => {
   try {
-    req.category = await Category.findById(req.params.id);
-    next();
+    const category = await Category.findById(req.params.id);
+
+    const { title, slug } = req.body;
+
+    category.title = title;
+    category.slug = slug;
+    await category.save();
+    return res.redirect("back");
   } catch (error) {
     res.render("errors/500", {
       pageTitle: "خطای سرور | 500",
@@ -114,6 +128,7 @@ exports.updateCategory = async (req, res) => {
 
 exports.deleteCategory = async (req, res) => {
   try {
+    console.log("test");
     await Category.findByIdAndDelete(req.params.id);
     res.redirect("/dashboard");
   } catch (error) {

@@ -23,11 +23,56 @@ exports.getIndex = async (req, res) => {
       createdAt: "desc",
     });
 
-    const policArticke = await Article.find().limit(3);
-    const policArticketest = await Article.find()
-      .limit(3)
-      .populate("category", "title slug");
+    const filter = { view: { $gte: 20 } };
+    const categoryFilter = { category: "syasy" };
 
+    const mostViewedArticlesTwo = await Article.aggregate([
+      { $match: filter },
+      {
+        $limit: 2,
+      },
+    ]);
+    const mostViewedArticles = await Article.aggregate([
+      {
+        $sort: { view: -1 },
+      },
+      {
+        $limit: 6,
+      },
+    ]);
+    const foundCategoryPolic = await Category.findOne({ title: "سیاسی" });
+    const policArticke = await Article.find({
+      category: foundCategoryPolic.id,
+    })
+      .sort("-createdAt")
+      .limit(3);
+    const policArtickeOne = await Article.find({
+      category: foundCategoryPolic.id,
+    })
+      .sort("-view")
+      .limit(1);
+
+    const foundCategoryBusiness = await Category.findOne({ title: "اقتصاد" });
+    const businessArticle = await Article.find({
+      category: foundCategoryBusiness.id,
+    })
+      .sort("-view")
+      .limit(1);
+
+    const foundCategorySoport = await Category.findOne({ title: "ورزش" });
+    const sportArticle = await Article.find({
+      category: foundCategorySoport.id,
+    })
+      .sort("-view")
+      .limit(1);
+
+    const sportArticles = await Article.find({
+      category: foundCategoryPolic.id,
+    })
+      .sort("-createdAt")
+      .limit(3);
+
+    console.log(foundCategoryBusiness);
     res.render("index", {
       pageTitle: " MNews | صفحه اصلی",
       path: "/",
@@ -37,6 +82,12 @@ exports.getIndex = async (req, res) => {
       LastArticles,
       LastArticle,
       policArticke,
+      mostViewedArticles,
+      mostViewedArticlesTwo,
+      policArtickeOne,
+      businessArticle,
+      sportArticle,
+      sportArticles,
     });
   } catch (err) {
     console.log(err);
@@ -46,9 +97,13 @@ exports.getIndex = async (req, res) => {
 
 exports.getSingleArticle = async (req, res) => {
   try {
-    const article = await Article.findOne({ _id: req.params.id }).populate(
-      "category"
-    );
+    const article = await Article.findOneAndUpdate(
+      {
+        _id: req.params.id,
+      },
+      { $inc: { view: 1 } },
+      { new: true }
+    ).populate("category");
 
     if (!article) return res.redirect("errors/404");
 

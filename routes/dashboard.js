@@ -43,10 +43,6 @@ router.post("/edit-post/:id", authenticated, adminController.editPost);
 //@route POST /dashboard/image-upload
 // router.post("/image-upload", authenticated, adminController.uploadImage);
 
-// article routes
-router.get("/add-article", articleController.getArticle);
-router.post("/add-article", articleController.createArticle);
-
 // @desc Handle serach
 // @route Article /serach
 router.post("/search", adminController.handleDashSearch);
@@ -58,15 +54,16 @@ router.post("/categories", categoryController.sotreCategory);
 // router.get("/categories/new", categoryController.createCategory);
 router.get("/categories/edit/:id", categoryController.editCategory);
 router.get("/categories/:slug", categoryController.slugCategory);
-router.put("/categories/:id", categoryController.updateCategory);
-router.delete("/categories/:id", categoryController.deleteCategory);
+router.post("/categories/update/:id", categoryController.updateCategory);
+router.get("/categories-del/:id", categoryController.deleteCategory);
 
 //articles
+// article routes
+router.get("/articles/all", articleController.getArticles);
+router.get("/add-article", articleController.createArticle);
+router.post("/add-article", articleController.storeArticle);
 
-router.get("/articles/all", articleController.getArticle);
-router.get("/articles", articleController.createArticle);
-router.get("/articles", articleController.getArticle);
-router.post("/articles", articleController.storeArticle);
+router.get("/article/:slug", articleController.slugArticle);
 router.post("/image-article", authenticated, articleController.uploadImage);
 router.get("/edit-article/:id", articleController.getEditArticle);
 router.post("/edit-article/:id", articleController.editArticle);

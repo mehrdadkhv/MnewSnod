@@ -32,7 +32,7 @@
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="/dashboard/articles">ساخت مقاله</a>
+            <a class="nav-link" href="/dashboard/add-article">ساخت مقاله</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/dashboard/articles/all">همه مقالات</a>
@@ -63,10 +63,16 @@
 
           <% categories.forEach(category => { %>
 
-          <li class="nav-item">
-            <a class="nav-link" href="/dashboard/categories/"
+          <li class="nav-item d-flex justify-content-between mt-7">
+            <a
+              class="nav-link"
+              href="/dashboard/categories/<%= category.slug %>"
               ><%= category.title %></a
             >
+            <a
+              href="/dashboard/categories/edit/<%= category.id %>"
+              class="mdi mdi-grease-pencil"
+            ></a>
           </li>
           <% }); %>
         </ul>

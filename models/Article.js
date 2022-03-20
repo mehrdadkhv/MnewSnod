@@ -22,6 +22,10 @@ const articleSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    view: {
+      type: Number,
+      defaultValue: 0,
+    },
     category: [
       {
         type: mongoose.Schema.Types.ObjectId,

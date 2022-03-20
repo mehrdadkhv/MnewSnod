@@ -7,7 +7,7 @@
         <div class="single-main-news">
           <a href="/article/<%= article._id %>">
             <img
-              src="http://localhost:3000/uploads/thumbnails/<%= article.image %> "
+              src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
               alt="image"
             />
           </a>
@@ -19,8 +19,8 @@
               </a>
             </h3>
             <span
-              ><a href="/article/<%= article._id %>">Walters</a> / 14 September,
-              2021</span
+              ><a href="/article/<%= article._id %>">                    <a href="#">پست شده </a><%= formatDate(article.createdAt) %>
+              </span
             >
           </div>
         </div>
@@ -31,20 +31,25 @@
         <% } %>
       </div>
       <div class="col-lg-4">
+        <% for(let article of businessArticle){ %>
         <div class="single-main-news-inner">
           <a href="#">
-            <img src="/blog/assets/img/main-news/main-news-2.jpg" alt="image" />
+            <img
+              src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
+              alt="image"
+            />
           </a>
           <div class="news-content">
-            <div class="tag">Business</div>
+            <div class="tag">اقتصاد</div>
             <h3>
-              <a href="#"
-                >Follow some simple rules to invest money in any business</a
-              >
+              <a href="#"><%- truncate(article.summary,200) %></a>
             </h3>
-            <span>28 September, 2021</span>
+            <span>
+              <a href="#">پست شده </a><%= formatDate(article.createdAt) %>
+            </span>
           </div>
         </div>
+        <% } %>
         <div class="single-main-news-box">
           <a href="#">
             <img src="/blog/assets/img/main-news/main-news-3.jpg" alt="image" />
@@ -90,11 +95,13 @@
           </div>
           <div class="row">
             <div class="col-lg-6">
+              <% for(let article of mostViewedArticlesTwo){ %>
+
               <div class="single-most-popular-news">
                 <div class="popular-news-image">
                   <a href="#">
                     <img
-                      src="/blog/assets/img/most-popular/most-popular-1.jpg"
+                      src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
                       alt="image"
                     />
                   </a>
@@ -102,43 +109,25 @@
                 <div class="popular-news-content">
                   <span>Politics</span>
                   <h3>
-                    <a href="#"
-                      >The Prime Minister’s said that selfish nations are
-                      constantly dying for their won interests.</a
+                    <a href="<%= article._id %>"
+                      ><%- truncate(article.summary,200) %></a
                     >
                   </h3>
                   <p><a href="#">Patricia</a> / 28 September, 2021</p>
                 </div>
               </div>
-              <div class="single-most-popular-news">
-                <div class="popular-news-image">
-                  <a href="#">
-                    <img
-                      src="/blog/assets/img/most-popular/most-popular-2.jpg"
-                      alt="image"
-                    />
-                  </a>
-                </div>
-                <div class="popular-news-content">
-                  <span>Premer league</span>
-                  <h3>
-                    <a href="#"
-                      >Manchester United’s dream of winning by a goal was
-                      fulfilled</a
-                    >
-                  </h3>
-                  <p><a href="#">Gonzalez</a> / 28 September, 2021</p>
-                </div>
-              </div>
+
+              <% } %>
             </div>
             <div class="col-lg-6">
+              <% for(let article of mostViewedArticles){ %>
               <div class="most-popular-post">
                 <div class="row align-items-center">
                   <div class="col-lg-4 col-sm-4">
                     <div class="post-image">
                       <a href="#">
                         <img
-                          src="/blog/assets/img/most-popular/most-popular-3.jpg"
+                          src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
                           alt="image"
                         />
                       </a>
@@ -148,197 +137,45 @@
                     <div class="post-content">
                       <span>Culture</span>
                       <h3>
-                        <a href="#"
-                          >As well as stopping goals, Christiane Endler is
-                          opening.</a
-                        >
+                        <a href="#"><%- truncate(article.summary,200) %></a>
                       </h3>
                       <p>28 September, 2021</p>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="most-popular-post">
-                <div class="row align-items-center">
-                  <div class="col-lg-4 col-sm-4">
-                    <div class="post-image">
-                      <a href="#">
-                        <img
-                          src="/blog/assets/img/most-popular/most-popular-4.jpg"
-                          alt="image"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-lg-8 col-sm-8">
-                    <div class="post-content">
-                      <span>Technology</span>
-                      <h3>
-                        <a href="#"
-                          >The majority of news published online presents more
-                          videos</a
-                        >
-                      </h3>
-                      <p>28 September, 2021</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="most-popular-post">
-                <div class="row align-items-center">
-                  <div class="col-lg-4 col-sm-4">
-                    <div class="post-image">
-                      <a href="#">
-                        <img
-                          src="/blog/assets/img/most-popular/most-popular-5.jpg"
-                          alt="image"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-lg-8 col-sm-8">
-                    <div class="post-content">
-                      <span>Business</span>
-                      <h3>
-                        <a href="#"
-                          >This movement aims to establish women’s rights.</a
-                        >
-                      </h3>
-                      <p>28 September, 2021</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="most-popular-post">
-                <div class="row align-items-center">
-                  <div class="col-lg-4 col-sm-4">
-                    <div class="post-image">
-                      <a href="#">
-                        <img
-                          src="/blog/assets/img/most-popular/most-popular-6.jpg"
-                          alt="image"
-                        />
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-lg-8 col-sm-8">
-                    <div class="post-content">
-                      <span>Politics</span>
-                      <h3>
-                        <a href="#"
-                          >Trump discusses various issues with his party’s
-                          political leaders.</a
-                        >
-                      </h3>
-                      <p>28 September, 2021</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <% } %>
             </div>
           </div>
         </div>
-        <div class="video-news">
-          <div class="section-title">
-            <h2>Top video</h2>
-          </div>
-          <div class="video-slides owl-carousel owl-theme">
-            <div class="video-item">
-              <div class="video-news-image">
-                <a href="#">
-                  <img
-                    src="/blog/assets/img/video-news/video-news-1.jpg"
-                    alt="image"
-                  />
-                </a>
-                <a
-                  href="https://www.youtube.com/watch?v=UG8N5JT4QLc"
-                  class="popup-youtube"
-                >
-                  <i class="bx bx-play-circle"></i>
-                </a>
-              </div>
-              <div class="video-news-content">
-                <h3>
-                  <a href="#"
-                    >Apply these 10 secret techniques to improve travel</a
-                  >
-                </h3>
-                <span>28 September, 2021</span>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="video-news-image">
-                <a href="#">
-                  <img
-                    src="/blog/assets/img/video-news/video-news-2.jpg"
-                    alt="image"
-                  />
-                </a>
-                <a
-                  href="https://www.youtube.com/watch?v=UG8N5JT4QLc"
-                  class="popup-youtube"
-                >
-                  <i class="bx bx-play-circle"></i>
-                </a>
-              </div>
-              <div class="video-news-content">
-                <h3>
-                  <a href="#">The lazy man’s guide to travel you to our moms</a>
-                </h3>
-                <span>28 September, 2021</span>
-              </div>
-            </div>
-            <div class="video-item">
-              <div class="video-news-image">
-                <a href="#">
-                  <img
-                    src="/blog/assets/img/video-news/video-news-3.jpg"
-                    alt="image"
-                  />
-                </a>
-                <a
-                  href="https://www.youtube.com/watch?v=UG8N5JT4QLc"
-                  class="popup-youtube"
-                >
-                  <i class="bx bx-play-circle"></i>
-                </a>
-              </div>
-              <div class="video-news-content">
-                <h3>
-                  <a href="#">Sony laptops are still part of the sony family</a>
-                </h3>
-                <span>28 September, 2021</span>
-              </div>
-            </div>
-          </div>
-        </div>
+
         <div class="politics-news">
           <div class="section-title">
             <h2>سیاست</h2>
           </div>
           <div class="row">
             <div class="col-lg-6">
+              <% for(let article of policArtickeOne){ %>
               <div class="single-politics-news">
                 <div class="politics-news-image">
                   <a href="#">
                     <img
-                      src="/blog/assets/img/politics-news/politics-news-1.jpg"
+                      src="http://localhost:3000/uploads/thumbnails/<%= article.image %>"
                       alt="image"
                     />
                   </a>
                 </div>
                 <div class="politics-news-content">
-                  <span>Politics</span>
+                  <span><%= article.title %></span>
                   <h3>
-                    <a href="#"
-                      >Organizing conference among our selves to make it better
-                      financially</a
-                    >
+                    <a href="#"><%- truncate(article.summary,200) %></a>
                   </h3>
-                  <p><a href="#">Jonson Steven</a> / 28 September, 2021</p>
+                  <p>
+                    <a href="#">پست شده </a><%= formatDate(article.createdAt) %>
+                  </p>
                 </div>
               </div>
+              <% } %>
             </div>
             <div class="col-lg-6">
               <% if(policArticke.length > 0) {%> <% for(let article of
@@ -842,12 +679,12 @@
             <% } %>
           </section>
           <section class="widget widget_featured_reports">
-            <h3 class="widget-title">Featured reports</h3>
+            <h3 class="widget-title">پست تصادفی</h3>
             <div class="single-featured-reports">
               <div class="featured-reports-image">
                 <a href="#">
                   <img
-                    src="/blog/assets/img/featured-reports/featured-reports-1.jpg"
+                    src="https://picsum.photos/seed/picsum/500/400"
                     alt="image"
                   />
                 </a>

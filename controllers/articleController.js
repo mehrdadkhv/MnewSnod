@@ -8,8 +8,9 @@ const Article = require("../models/Article");
 const Category = require("../models/Category");
 const mongoose = require("mongoose");
 const { fileFilter } = require("../utils/multer");
+const { formatDate } = require("../utils/jalali");
 
-exports.getArticle = async (req, res) => {
+exports.getArticles = async (req, res) => {
   const page = +req.query.page || 1; //string to number
   const articlePrePage = 10;
 
@@ -139,15 +140,20 @@ exports.editArticle = async (req, res) => {
 
 exports.slugArticle = async (req, res) => {
   try {
+    const categories = await Category.find({});
+
     const article = await Article.findOne({
       slug: req.params.slug,
     });
     if (article == null) res.redirect("/dashboard");
-    res.render("admin/articles", {
+    res.render("admin/articles/show", {
       article,
+      pageTitle: article.title,
       path: "/admin/addArticles",
       layout: "./layouts/dashLayout",
       fullname: req.user.fullname,
+      categories,
+      formatDate,
     });
   } catch (error) {
     res.render("errors/500", {
@@ -240,9 +246,12 @@ exports.storeArticle = async (req, res) => {
 
 exports.deleteArticle = async (req, res) => {
   try {
-    console.log("da");
-    await Article.findByIdAndRemove(req.params.id);
-    res.redirect("/dashboard/articles/all");
+    const article = await Article.findByIdAndRemove(req.params.id);
+    await Category.updateMany(
+      { _id: article.category },
+      { $pull: { articles: article._id } }
+    );
+    res.redirect("back");
   } catch (error) {
     res.render("errors/500", {
       pageTitle: "خطای سرور | 500",
