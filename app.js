@@ -76,7 +76,8 @@ app.use(passport.session());
 app.use(flash()); //req.flash
 
 // static folder
-app.use(express.static(path.join(__dirname, "/public")));
+// app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(process.cwd() + "/public"));
 
 //* routes
 app.use("/", require("./routes/blog"));
