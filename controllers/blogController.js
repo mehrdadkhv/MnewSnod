@@ -40,12 +40,14 @@ exports.getIndex = async (req, res) => {
         $limit: 6,
       },
     ]);
-    const foundCategoryPolic = await Category.findOne({ title: "سیاسی" });
+
+    const foundCategoryPolic = await Category.findOne({ title: "اقتصاد" });
     const policArticke = await Article.find({
       category: foundCategoryPolic.id,
     })
       .sort("-createdAt")
       .limit(3);
+
     const policArtickeOne = await Article.find({
       category: foundCategoryPolic.id,
     })
@@ -67,7 +69,7 @@ exports.getIndex = async (req, res) => {
       .limit(1);
 
     const sportArticles = await Article.find({
-      category: foundCategoryPolic.id,
+      category: foundCategorySoport.id,
     })
       .sort("-createdAt")
       .limit(3);
