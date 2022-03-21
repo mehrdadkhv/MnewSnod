@@ -283,7 +283,9 @@ exports.uploadImage = (req, res) => {
           .toFile(`./public/uploads/${fileName}`)
           .catch((err) => console.log(err));
 
-        await res.status(200).send(`http://localhost:3000/uploads/${fileName}`);
+        await res
+          .status(200)
+          .send(`https://khodaverdi-news.herokuapp.com/uploads/${fileName}`);
       } else {
         res.send("برای آپلود تصویر معتبر انتخاب کنید ");
       }

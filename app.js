@@ -1,13 +1,11 @@
 const path = require("path");
 
-const debug = require("debug")("weblog-project");
 const fileUpload = require("express-fileupload");
 const express = require("express");
 const mongoose = require("mongoose");
 
 const expressLayouts = require("express-ejs-layouts");
 const passport = require("passport");
-const dotEnv = require("dotenv");
 const morgan = require("morgan");
 const flash = require("connect-flash");
 const session = require("express-session");
@@ -31,8 +29,6 @@ mongoose
   .then(() => {
     () => console.log("DB connection successful!");
   });
-
-debug("Connecting to Database");
 
 //* Passwport Configuration
 require("./config/passport");

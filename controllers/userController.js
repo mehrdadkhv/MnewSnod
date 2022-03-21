@@ -148,7 +148,7 @@ exports.handleForgetPassword = async (req, res) => {
     expiresIn: "1h",
   });
 
-  const resetLink = `http://localhost:3000/users/reset-password/${token}`;
+  const resetLink = `https://khodaverdi-news.herokuapp.com/users/reset-password/${token}`;
 
   sendEmail(
     user.email,
