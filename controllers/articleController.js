@@ -57,7 +57,7 @@ exports.getEditArticle = async (req, res) => {
   }).populate("category", "title slug");
 
   if (!article) {
-    return res.redirect("/404");
+    return res.redirect("errors/404");
   }
 
   // console.log(article.category[0].title);
@@ -95,7 +95,7 @@ exports.editArticle = async (req, res) => {
     //   });
 
     if (!article) {
-      return res.redirect("/404");
+      return res.redirect("errors/404");
     }
     req.body = { ...req.body, image };
 
@@ -290,9 +290,7 @@ exports.uploadImage = (req, res) => {
           .toFile(`./public/uploads/${fileName}`)
           .catch((err) => console.log(err));
         // res.json({"message" : "", "address" : ""});
-        res
-          .status(200)
-          .send(`https://khodaverdi-news.herokuapp.com/uploads/${fileName}`);
+        res.status(200).send(`public/uploads/${fileName}`);
       } else {
         res.send("جهت آپلود باید عکسی انتخاب کنید");
       }
