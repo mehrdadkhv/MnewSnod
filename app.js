@@ -47,7 +47,7 @@ if (process.env.NODE_ENV === "development") {
 app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.set("layout", "./layouts/masterLayouts");
-app.set("views", "views");
+app.set("views", path.join(__dirname, "views"));
 
 //* BodyPaser
 app.use(express.urlencoded({ extended: false }));
@@ -76,8 +76,7 @@ app.use(passport.session());
 app.use(flash()); //req.flash
 
 // static folder
-// app.use(express.static(path.join(__dirname, "/public")));
-app.use(express.static(process.cwd() + "/public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 //* routes
 app.use("/", require("./routes/blog"));
