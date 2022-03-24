@@ -588,10 +588,11 @@
                       Leave a message
                     </h3>
                     <form
-                      action="#"
+                      action="/resume"
                       class="needs-validation animation-translate animation-item-4"
                       method="post"
                       novalidate
+                      id="formMessage"
                     >
                       <div class="row">
                         <div class="col-12 col-md-6">
@@ -695,8 +696,29 @@
       ></a>
     </div>
   </body>
-  <script src="/resume/dist/js/all.js "></script>
+  <script src="/resume/dist/js/all.js"></script>
   <script>
+    $(document).ready(function () {
+      $("formMessage").on("submit", function (event) {
+        event.preventDefault();
+        var formData = {
+          name: $("#name").val(),
+          email: $("#email").val(),
+          message: $("#message").val(),
+        };
+
+        $.ajax({
+          url: "/resume",
+          method: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ quote: value }),
+          success: function (res) {
+            console.log(res.response);
+          },
+        });
+      });
+    });
+
     $(function () {
       $('[data-toggle="tooltip"]').tooltip();
 
