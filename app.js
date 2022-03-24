@@ -82,6 +82,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", require("./routes/blog"));
 app.use("/users", require("./routes/users"));
 app.use("/dashboard", require("./routes/dashboard"));
+app.use("/resume", require("./routes/resume-firstpage"));
 
 //& 404 page
 app.use(require("./controllers/errorController").get404);
