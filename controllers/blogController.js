@@ -74,7 +74,7 @@ exports.getIndex = async (req, res) => {
       .sort("-createdAt")
       .limit(3);
 
-    console.log(foundCategoryBusiness);
+  
     res.render("index", {
       pageTitle: " MNews | صفحه اصلی",
       path: "/",

@@ -11,6 +11,15 @@ const flash = require("connect-flash");
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const dotenv = require("dotenv");
+const AppError = require("./utils/appError")
+const globalErrorController = require("./controllers/errorController")
+
+process.on('uncaughtException', err=>{
+  console.log(err.name,err.message);
+  console.log("uncaughtException!! shut down...");
+  process.exit(1)
+
+})
 
 // load config
 dotenv.config({ path: "./config/config.env" });
@@ -34,6 +43,8 @@ mongoose
 require("./config/passport");
 
 const app = express();
+
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -84,8 +95,12 @@ app.use("/users", require("./routes/users"));
 app.use("/dashboard", require("./routes/dashboard"));
 app.use("/resume", require("./routes/resume-firstpage"));
 
+
 //& 404 page
-app.use(require("./controllers/errorController").get404);
+app.all('*',require("./controllers/errorController").get404)
+// app.all('*',require("./controllers/errorController").get404)
+
+app.use(globalErrorController.global)
 
 // const PORT = process.env.PORT || 3000;
 
@@ -96,3 +111,12 @@ const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {
   console.log(`App running on port ${port}...`);
 });
+
+process.on('unhandledRejection', err=>{
+  console.log(err.name,err.message);
+  console.log("unhandeledRejection!! shut down...");
+  server.close(()=>{
+    process.exit(1)
+  })
+})
+
