@@ -3,6 +3,11 @@ const path = require("path");
 const fileUpload = require("express-fileupload");
 const express = require("express");
 const mongoose = require("mongoose");
+const rateLimit= require("express-rate-limit");
+const helmet = require("helmet") 
+const mongoSanitize = require("express-mongo-sanitize");
+const xss = require('xss-clean')
+const hpp = require('hpp')
 
 const expressLayouts = require("express-ejs-layouts");
 const passport = require("passport");
@@ -14,6 +19,7 @@ const dotenv = require("dotenv");
 const AppError = require("./utils/appError")
 const globalErrorController = require("./controllers/errorController")
 
+
 process.on('uncaughtException', err=>{
   console.log(err.name,err.message);
   console.log("uncaughtException!! shut down...");
@@ -23,6 +29,24 @@ process.on('uncaughtException', err=>{
 
 // load config
 dotenv.config({ path: "./config/config.env" });
+
+const app = express();
+
+
+// 1 global middleware
+app.use(helmet())
+
+if(process.env.NODE_ENV === "development"){
+  app.use(morgan('dev'))
+}
+
+const limiter = rateLimit({
+  max:3, 
+  windowMs : 60 * 60 * 1000 , //1uhr
+  message : 'Too many request from this IP , please try agin in an hour'
+});
+
+app.use('/',limiter);
 
 // database connection
 // connectDB();
@@ -42,17 +66,14 @@ mongoose
 //* Passwport Configuration
 require("./config/passport");
 
-const app = express();
 
 
 
+
+//body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// loggin routes
-if (process.env.NODE_ENV === "development") {
-  // debug("Morgan Enabale");
-  // app.use(morgan("combined", { stream: winston.stream }));
-}
+
 
 // view engine
 app.use(expressLayouts);
@@ -62,7 +83,15 @@ app.set("views", path.join(__dirname, "views"));
 
 //* BodyPaser
 app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
+app.use(express.json({limit: '10kb'}));
+
+//data sanitization agaubst nosql query injection
+app.use(mongoSanitize());
+
+//Data sanitization agaubst XSS
+app.use(xss())
+
+
 
 // file upload middleware
 app.use(fileUpload());

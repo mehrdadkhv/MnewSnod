@@ -23,8 +23,12 @@
     "express": "^4.17.2",
     "express-ejs-layouts": "^2.5.1",
     "express-fileupload": "^1.2.1",
+    "express-mongo-sanitize": "^2.2.0",
+    "express-rate-limit": "^6.3.0",
     "express-session": "^1.17.2",
     "form-data": "^4.0.0",
+    "helmet": "^5.0.2",
+    "hpp": "^0.2.3",
     "jalali-moment": "^3.3.10",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.7",
@@ -41,6 +45,7 @@
     "shortid": "^2.2.16",
     "slugify": "^1.6.5",
     "uuid": "^8.3.2",
+    "xss-clean": "^0.1.1",
     "yup": "^0.32.11"
   },
   "devDependencies": {
