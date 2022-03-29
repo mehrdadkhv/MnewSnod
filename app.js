@@ -75,7 +75,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 
-// view engine
+// view engine r
 app.use(expressLayouts);
 app.set("view engine", "ejs");
 app.set("layout", "./layouts/masterLayouts");
